@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="invt.dao.local.InvtDebtSaleTaskLogDao">
+  <resultMap id="BaseResultMap" type="invt.model.po.InvtDebtSaleTaskLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="acc_proof" jdbcType="VARCHAR" property="accProof" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="buy_num" jdbcType="DECIMAL" property="buyNum" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="to_id" jdbcType="BIGINT" property="toId" />
+    <result column="to_type" jdbcType="BIT" property="toType" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="product_yield" jdbcType="DECIMAL" property="productYield" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, task_id, acc_proof, user_id, amount, buy_num, product_id, to_id, to_type, `status`,
+    version, create_time, update_time,product_yield
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invt_debt_sale_task_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invt_debt_sale_task_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="invt.model.po.InvtDebtSaleTaskLog">
+    insert into invt_debt_sale_task_log (id, task_id, acc_proof,
+      user_id, amount, buy_num,
+      product_id, to_id, to_type,
+      `status`, version, create_time,
+      update_time,product_yield)
+    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{accProof,jdbcType=VARCHAR},
+      #{userId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{buyNum,jdbcType=DECIMAL},
+      #{productId,jdbcType=BIGINT}, #{toId,jdbcType=BIGINT}, #{toType,jdbcType=BIT},
+      #{status,jdbcType=BIT}, #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},#{productYield,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="invt.model.po.InvtDebtSaleTaskLog">
+    insert into invt_debt_sale_task_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="accProof != null">
+        acc_proof,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="buyNum != null">
+        buy_num,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="toId != null">
+        to_id,
+      </if>
+      <if test="toType != null">
+        to_type,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="product_yield != null">
+        product_yield,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="accProof != null">
+        #{accProof,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyNum != null">
+        #{buyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="toId != null">
+        #{toId,jdbcType=BIGINT},
+      </if>
+      <if test="toType != null">
+        #{toType,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productYield != null">
+        #{productYield,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="invt.model.po.InvtDebtSaleTaskLog">
+    update invt_debt_sale_task_log
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="accProof != null">
+        acc_proof = #{accProof,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyNum != null">
+        buy_num = #{buyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="toId != null">
+        to_id = #{toId,jdbcType=BIGINT},
+      </if>
+      <if test="toType != null">
+        to_type = #{toType,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="invt.model.po.InvtDebtSaleTaskLog">
+    update invt_debt_sale_task_log
+    set task_id = #{taskId,jdbcType=BIGINT},
+      acc_proof = #{accProof,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      buy_num = #{buyNum,jdbcType=DECIMAL},
+      product_id = #{productId,jdbcType=BIGINT},
+      to_id = #{toId,jdbcType=BIGINT},
+      to_type = #{toType,jdbcType=BIT},
+      `status` = #{status,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+    insert into invt_debt_sale_task_log
+      (task_id,
+      user_id,
+      amount,
+      buy_num,
+      product_id,
+      to_id,
+      to_type,
+      `status`,
+      product_yield)
+    values
+    <foreach collection="list" index="index" item="record" separator=",">
+      (#{record.taskId,jdbcType=BIGINT},
+      #{record.userId,jdbcType=BIGINT},
+      #{record.amount,jdbcType=DECIMAL},
+      #{record.buyNum,jdbcType=DECIMAL},
+      #{record.productId,jdbcType=BIGINT},
+      #{record.toId,jdbcType=BIGINT},
+      #{record.toType,jdbcType=BIT},
+      #{record.status,jdbcType=BIT},
+      #{record.productYield,jdbcType=DECIMAL})
+    </foreach>
+  </insert>
+
+  <select id="selectByTaskUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invt_debt_sale_task_log
+    where
+    task_id = #{taskId,jdbcType=BIGINT}
+    and user_id = #{userId,jdbcType=BIGINT}
+    and status = 0
+  </select>
+
+  <update id="updateDsTaskLogStatus" parameterType="invt.model.po.InvtDebtSaleTaskLog">
+    update invt_debt_sale_task_log
+    set
+    `status` = #{targetStatus,jdbcType=BIT},
+    <if test="version != null">
+      version = version+1,
+    </if>
+    update_time = now()
+    where id = #{id,jdbcType=BIGINT}
+    and status = #{status,jdbcType=BIT}
+    <if test="version != null">
+      and version = #{version,jdbcType=INTEGER},
+    </if>
+  </update>
+</mapper>

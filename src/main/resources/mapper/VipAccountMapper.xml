@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="invt.dao.local.VipAccountLocalDao">
+  <resultMap id="BaseResultMap" type="invt.model.po.VipAccount">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="fp_id" jdbcType="BIGINT" property="fpId" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="extno" jdbcType="VARCHAR" property="extno" />
+    <result column="dscrpt" jdbcType="VARCHAR" property="dscrpt" />
+    <result column="is_cash" jdbcType="TINYINT" property="isCash" />
+    <result column="cash_time" jdbcType="TIMESTAMP" property="cashTime" />
+    <result column="is_transfer" jdbcType="BIT" property="isTransfer" />
+    <result column="is_quit" jdbcType="BIT" property="isQuit" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, `type`, fp_id, amount, extno, dscrpt, is_cash, cash_time, is_transfer, 
+    is_quit, version, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vip_account
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vip_account
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="invt.model.po.VipAccount">
+    insert into vip_account (id, user_id, `type`, 
+      fp_id, amount, extno, 
+      dscrpt, is_cash, cash_time, 
+      is_transfer, is_quit, version, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{fpId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{extno,jdbcType=VARCHAR}, 
+      #{dscrpt,jdbcType=VARCHAR}, #{isCash,jdbcType=TINYINT}, #{cashTime,jdbcType=TIMESTAMP}, 
+      #{isTransfer,jdbcType=BIT}, #{isQuit,jdbcType=BIT}, #{version,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="invt.model.po.VipAccount">
+    insert into vip_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="fpId != null">
+        fp_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="extno != null">
+        extno,
+      </if>
+      <if test="dscrpt != null">
+        dscrpt,
+      </if>
+      <if test="isCash != null">
+        is_cash,
+      </if>
+      <if test="cashTime != null">
+        cash_time,
+      </if>
+      <if test="isTransfer != null">
+        is_transfer,
+      </if>
+      <if test="isQuit != null">
+        is_quit,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fpId != null">
+        #{fpId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="extno != null">
+        #{extno,jdbcType=VARCHAR},
+      </if>
+      <if test="dscrpt != null">
+        #{dscrpt,jdbcType=VARCHAR},
+      </if>
+      <if test="isCash != null">
+        #{isCash,jdbcType=TINYINT},
+      </if>
+      <if test="cashTime != null">
+        #{cashTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTransfer != null">
+        #{isTransfer,jdbcType=BIT},
+      </if>
+      <if test="isQuit != null">
+        #{isQuit,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="invt.model.po.VipAccount">
+    update vip_account
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="fpId != null">
+        fp_id = #{fpId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="extno != null">
+        extno = #{extno,jdbcType=VARCHAR},
+      </if>
+      <if test="dscrpt != null">
+        dscrpt = #{dscrpt,jdbcType=VARCHAR},
+      </if>
+      <if test="isCash != null">
+        is_cash = #{isCash,jdbcType=TINYINT},
+      </if>
+      <if test="cashTime != null">
+        cash_time = #{cashTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTransfer != null">
+        is_transfer = #{isTransfer,jdbcType=BIT},
+      </if>
+      <if test="isQuit != null">
+        is_quit = #{isQuit,jdbcType=BIT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="invt.model.po.VipAccount">
+    update vip_account
+    set user_id = #{userId,jdbcType=BIGINT},
+      `type` = #{type,jdbcType=INTEGER},
+      fp_id = #{fpId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      extno = #{extno,jdbcType=VARCHAR},
+      dscrpt = #{dscrpt,jdbcType=VARCHAR},
+      is_cash = #{isCash,jdbcType=TINYINT},
+      cash_time = #{cashTime,jdbcType=TIMESTAMP},
+      is_transfer = #{isTransfer,jdbcType=BIT},
+      is_quit = #{isQuit,jdbcType=BIT},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getVipAccount" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from vip_account
+    where fp_id=#{fpId,jdbcType=BIGINT} and user_id=#{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getVaIdListByFpId" resultType="java.lang.Long">
+    SELECT
+        id
+    from vip_account
+    where fp_id=#{fpId,jdbcType=BIGINT}
+  </select>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="invt.dao.local.DebtPackageBorrowsDao" >
+  <resultMap id="BaseResultMap" type="invt.model.po.DebtPackageBorrows" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dp_id" property="dpId" jdbcType="BIGINT" />
+    <result column="bo_id" property="boId" jdbcType="BIGINT" />
+    <result column="bo_extno" property="boExtno" jdbcType="VARCHAR" />
+    <result column="bo_finish_price" property="boFinishPrice" jdbcType="DECIMAL" />
+    <result column="br_price" property="brPrice" jdbcType="DECIMAL" />
+    <result column="bo_expect" property="boExpect" jdbcType="INTEGER" />
+    <result column="bo_remain" property="boRemain" jdbcType="INTEGER" />
+    <result column="bo_sign_time" property="boSignTime" jdbcType="TIMESTAMP" />
+    <result column="last_plan_time" property="lastPlanTime" jdbcType="TIMESTAMP" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="id_num" property="idNum" jdbcType="VARCHAR" />
+    <result column="brithday" property="brithday" jdbcType="VARCHAR" />
+    <result column="mobile_num" property="mobileNum" jdbcType="VARCHAR" />
+    <result column="academy" property="academy" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="edu_start_date" property="eduStartDate" jdbcType="VARCHAR" />
+    <result column="campus" property="campus" jdbcType="VARCHAR" />
+    <result column="emergency_parent" property="emergencyParent" jdbcType="VARCHAR" />
+    <result column="emergency_counselor" property="emergencyCounselor" jdbcType="VARCHAR" />
+    <result column="emergency_other" property="emergencyOther" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="bo_aim" property="boAim" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dp_id, bo_id, bo_extno, bo_finish_price, br_price, bo_expect, bo_remain, bo_sign_time, 
+    last_plan_time, real_name, user_name, id_num, brithday, mobile_num, academy, major, 
+    education, edu_start_date, campus, emergency_parent, emergency_counselor, emergency_other, 
+    address, gender, bo_aim, version, create_time, update_time
+  </sql>
+  <select id="selectById" resultMap="invt.dao.local.DebtPackageBorrowsDao.BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from debt_package_borrows
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="invt.model.po.DebtPackageBorrows" >
+    insert into debt_package_borrows (id, dp_id, bo_id, 
+      bo_extno, bo_finish_price, br_price, 
+      bo_expect, bo_remain, bo_sign_time, 
+      last_plan_time, real_name, user_name, 
+      id_num, brithday, mobile_num, 
+      academy, major, education, 
+      edu_start_date, campus, emergency_parent, 
+      emergency_counselor, emergency_other, address, 
+      gender, bo_aim, version, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{dpId,jdbcType=BIGINT}, #{boId,jdbcType=BIGINT}, 
+      #{boExtno,jdbcType=VARCHAR}, #{boFinishPrice,jdbcType=DECIMAL}, #{brPrice,jdbcType=DECIMAL}, 
+      #{boExpect,jdbcType=INTEGER}, #{boRemain,jdbcType=INTEGER}, #{boSignTime,jdbcType=TIMESTAMP}, 
+      #{lastPlanTime,jdbcType=TIMESTAMP}, #{realName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{idNum,jdbcType=VARCHAR}, #{brithday,jdbcType=VARCHAR}, #{mobileNum,jdbcType=VARCHAR}, 
+      #{academy,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{eduStartDate,jdbcType=VARCHAR}, #{campus,jdbcType=VARCHAR}, #{emergencyParent,jdbcType=VARCHAR}, 
+      #{emergencyCounselor,jdbcType=VARCHAR}, #{emergencyOther,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{boAim,jdbcType=VARCHAR}, 1,now(),now())
+  </insert>
+
+  <update id="updateById" parameterType="invt.model.po.DebtPackageBorrows" >
+    update debt_package_borrows
+    set dp_id = #{dpId,jdbcType=BIGINT},
+      bo_id = #{boId,jdbcType=BIGINT},
+      bo_extno = #{boExtno,jdbcType=VARCHAR},
+      bo_finish_price = #{boFinishPrice,jdbcType=DECIMAL},
+      br_price = #{brPrice,jdbcType=DECIMAL},
+      bo_expect = #{boExpect,jdbcType=INTEGER},
+      bo_remain = #{boRemain,jdbcType=INTEGER},
+      bo_sign_time = #{boSignTime,jdbcType=TIMESTAMP},
+      last_plan_time = #{lastPlanTime,jdbcType=TIMESTAMP},
+      real_name = #{realName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      id_num = #{idNum,jdbcType=VARCHAR},
+      brithday = #{brithday,jdbcType=VARCHAR},
+      mobile_num = #{mobileNum,jdbcType=VARCHAR},
+      academy = #{academy,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      edu_start_date = #{eduStartDate,jdbcType=VARCHAR},
+      campus = #{campus,jdbcType=VARCHAR},
+      emergency_parent = #{emergencyParent,jdbcType=VARCHAR},
+      emergency_counselor = #{emergencyCounselor,jdbcType=VARCHAR},
+      emergency_other = #{emergencyOther,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      bo_aim = #{boAim,jdbcType=VARCHAR},
+      version = version+1,
+      update_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByBoId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from debt_package_borrows
+    where bo_id = #{boId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryListByBoIds" resultMap="BaseResultMap">
+    select id,bo_id FROM
+    debt_package_borrows
+    where bo_id in
+    <foreach collection="boIds" item="boId" index="index" open="(" close=")" separator=",">
+      #{boId}
+    </foreach>
+
+  </select>
+</mapper>

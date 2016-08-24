@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="invt.dao.local.DebtExchangeAccountDao">
+	<resultMap id="BaseResultMap" type="invt.model.po.DebtExchangeAccount">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="user_id" property="userId" jdbcType="BIGINT"/>
+		<result column="bo_id" property="boId" jdbcType="BIGINT"/>
+		<result column="va_id" property="vaId" jdbcType="BIGINT"/>
+		<result column="hold_num" property="holdNum" jdbcType="DECIMAL"/>
+		<result column="locking_num" property="lockingNum" jdbcType="DECIMAL"/>
+		<result column="transfer_num" property="transferNum" jdbcType="DECIMAL"/>
+		<result column="version" property="version" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="transfer_status" property="transferStatus" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+    id, user_id, bo_id, va_id, hold_num, locking_num, transfer_num, version, create_time, 
+    update_time, transfer_status
+  </sql>
+	<select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List"/>
+		from debt_exchange_account
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="invt.model.po.DebtExchangeAccount">
+    insert into debt_exchange_account (user_id, bo_id,
+      va_id, hold_num, locking_num, 
+      transfer_num, version, create_time, 
+      update_time, transfer_status)
+    values ( #{userId,jdbcType=BIGINT}, #{boId,jdbcType=BIGINT},
+      #{vaId,jdbcType=BIGINT}, #{holdNum,jdbcType=DECIMAL}, #{lockingNum,jdbcType=DECIMAL}, 
+      #{transferNum,jdbcType=DECIMAL}, 1,now(),now(), #{transferStatus,jdbcType=INTEGER})
+  </insert>
+
+	<update id="updateById" parameterType="invt.model.po.DebtExchangeAccount">
+    update debt_exchange_account
+    set user_id = #{userId,jdbcType=BIGINT},
+      bo_id = #{boId,jdbcType=BIGINT},
+      va_id = #{vaId,jdbcType=BIGINT},
+      hold_num = #{holdNum,jdbcType=DECIMAL},
+      locking_num = #{lockingNum,jdbcType=DECIMAL},
+      transfer_num = #{transferNum,jdbcType=DECIMAL},
+      version = version+1,
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      transfer_status = #{transferStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+	<update id="updateByBoId">
+        update debt_exchange_account
+        set hold_num=#{holdNum,jdbcType=DECIMAL} ,
+        locking_num=#{lockingNum,jdbcType=DECIMAL},
+        version=version+1,
+        update_time=now()
+        where bo_id=#{boId,jdbcType=BIGINT}
+    </update>
+
+	<select id="selectByboIdVaId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from debt_exchange_account
+		where bo_id=#{boId,jdbcType=BIGINT}
+		and user_id=#{userId,jdbcType=BIGINT}
+		and va_id=#{vaId,jdbcType=BIGINT}
+	</select>
+
+	<update id="updateHoldNumById">
+		update debt_exchange_account
+		set hold_num=#{holdNum,jdbcType=DECIMAL}
+		version=version+1,
+		update_time=now()
+		where id=#{id,jdbcType=BIGINT}
+		AND version=#{version,jdbcType=INTEGER}
+	</update>
+
+	<update id="lockNum">
+		update debt_exchange_account
+		set
+		locking_num=#{lockingNum,jdbcType=DECIMAL}
+		and version=verison+1
+		where id=#{id,jdbcType=BIGINT} and version=#{version,jdbcType=INTEGER}
+	</update>
+
+	<update id="subQuotient">
+		update debt_exchange_account
+		set
+		hold_num=hold_num-#{soldNum, jdbcType=DECIMAL},
+		locking_num=locking_num-#{soldNum,jdbcType=DECIMAL},
+		transfer_num=transfer_num-#{soldNum,jdbcType=DECIMAL},
+		version=verison+1
+		where bo_id=#{boId,jdbcType=BIGINT}
+		and user_id=#{userId,jdbcType=BIGINT}
+		and va_id=#{vaId,jdbcType=BIGINT}
+		and version=#{version,jdbcType=INTEGER}
+	</update>
+
+	<update id="addQuotient">
+		update debt_exchange_account
+		set
+		hold_num=hold_num-#{buyNum, jdbcType=DECIMAL},
+		version=verison+1
+		where id=#{id,jdbcType=BIGINT}
+		and version=#{version,jdbcType=INTEGER}
+	</update>
+
+</mapper>

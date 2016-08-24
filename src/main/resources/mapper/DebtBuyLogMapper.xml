@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="invt.dao.local.DebtBuyLogDao" >
+  <resultMap id="BaseResultMap" type="invt.model.po.DebtBuyLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="bo_id" property="boId" jdbcType="BIGINT" />
+    <result column="va_id" property="vaId" jdbcType="BIGINT" />
+    <result column="ds_id" property="dsId" jdbcType="BIGINT" />
+    <result column="p_type" property="pType" jdbcType="BIT" />
+    <result column="buy_num" property="buyNum" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="price_in" property="priceIn" jdbcType="DECIMAL" />
+    <result column="extno" property="extno" jdbcType="VARCHAR" />
+    <result column="guid" property="guid" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="terminal" property="terminal" jdbcType="INTEGER" />
+    <result column="trd_serial_no" property="trdSerialNo" jdbcType="VARCHAR"/>
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, bo_id, va_id, ds_id, p_type, buy_num, price, price_in, extno, guid, 
+    pay_time, status, terminal, trd_serial_no, version, create_time, update_time
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from debt_buy_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from debt_buy_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="invt.model.po.DebtBuyLog" >
+    insert into debt_buy_log (id, user_id, bo_id, 
+      va_id, ds_id, p_type, buy_num, 
+      price, price_in, extno, 
+      guid, pay_time, status, 
+      terminal, trd_serial_no,
+      version, create_time,
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{boId,jdbcType=BIGINT}, 
+      #{vaId,jdbcType=BIGINT}, #{dsId,jdbcType=BIGINT}, #{pType,jdbcType=BIT}, #{buyNum,jdbcType=DECIMAL}, 
+      #{price,jdbcType=DECIMAL}, #{priceIn,jdbcType=DECIMAL}, #{extno,jdbcType=VARCHAR}, 
+      #{guid,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT}, 
+      #{terminal,jdbcType=INTEGER},#{trdSerialNo,jdbcType=VARCHAR},
+       #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <update id="updateById" parameterType="invt.model.po.DebtBuyLog" >
+    update debt_buy_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="boId != null" >
+        bo_id = #{boId,jdbcType=BIGINT},
+      </if>
+      <if test="vaId != null" >
+        va_id = #{vaId,jdbcType=BIGINT},
+      </if>
+      <if test="dsId != null" >
+        ds_id = #{dsId,jdbcType=BIGINT},
+      </if>
+      <if test="pType != null" >
+        p_type = #{pType,jdbcType=BIT},
+      </if>
+      <if test="buyNum != null" >
+        buy_num = #{buyNum,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceIn != null" >
+        price_in = #{priceIn,jdbcType=DECIMAL},
+      </if>
+      <if test="extno != null" >
+        extno = #{extno,jdbcType=VARCHAR},
+      </if>
+      <if test="guid != null" >
+        guid = #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="terminal != null" >
+        terminal = #{terminal,jdbcType=INTEGER},
+      </if>
+      <if test="trdSerialNo != null">
+        trd_serial_no = #{trdSerialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updatePriceById">
+    update debt_buy_log
+    set price_in=#{priceIn,jdbcType=DECIMAL},
+    version=version+1
+    where id = #{id,jdbcType=BIGINT} and version=#{version,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatusSuccess" parameterType="invt.model.po.DebtBuyLog">
+    update debt_buy_log
+    set
+    price=#{price,jdbcType=DECIMAL},
+    price_in=#{priceIn,jdbcType=DECIMAL},
+    pay_time=now(),
+    status=1,
+    version=version+1
+    where id=#{id,jdbcType=BIGINT} and version=#{version,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="invt.dao.local.InvtProofDao">
+  <resultMap id="BaseResultMap" type="invt.model.po.InvtProof">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="proof_id" jdbcType="VARCHAR" property="proofId" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="status" jdbcType="INTEGER" javaType="invt.biz.enums.ProofStatus" property="status" />
+    <result column="biz_id" jdbcType="VARCHAR" property="bizId" />
+    <result column="biz_type" jdbcType="INTEGER" javaType="invt.biz.enums.ProofBizType" property="bizType" />
+    <result column="retry_time" jdbcType="INTEGER" property="retryTime" />
+    <result column="bz_id" jdbcType="BIGINT" property="bzId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, proof_id, version, create_time, update_time, `status`, biz_id, biz_type,retry_time,bz_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from invt_proof
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from invt_proof
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="invt.model.po.InvtProof">
+    insert into invt_proof (id, proof_id, version,
+      create_time, update_time, `status`, 
+      biz_id, biz_type,bz_id)
+    values (#{id,jdbcType=BIGINT}, #{proofId,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{bizId,jdbcType=VARCHAR}, #{bizType,jdbcType=INTEGER},#{bzId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="invt.model.po.InvtProof">
+    insert into invt_proof
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="proofId != null">
+        proof_id,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="bizId != null">
+        biz_id,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="retry_time != null">
+        retry_time,
+      </if>
+      <if test="bz_id != null">
+        bz_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="proofId != null">
+        #{proofId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="bizId != null">
+        #{bizId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=INTEGER},
+      </if>
+      <if test="retryTime != null">
+        #{retryTime,jdbcType=INTEGER},
+      </if>
+      <if test="bzId != null">
+        #{bzId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="invt.model.po.InvtProof">
+    update invt_proof
+    <set>
+      <if test="proofId != null">
+        proof_id = #{proofId,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="bizId != null">
+        biz_id = #{bizId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=INTEGER},
+      </if>
+      <if test="retryTime != null">
+        retryTime = #{retryTime,jdbcType=INTEGER},
+      </if>
+      <if test="bzId != null">
+        bzId = #{bzId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="invt.model.po.InvtProof">
+    update invt_proof
+    set proof_id = #{proofId,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER},
+      biz_id = #{bizId,jdbcType=VARCHAR},
+      biz_type = #{bizType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByBizId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invt_proof
+    where biz_id = #{bizId,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateRecordStatus" parameterType="java.util.HashMap">
+    update invt_proof
+    <set>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetStatus != null">
+        `status` = #{targetStatus,jdbcType=INTEGER,javaType=invt.biz.enums.ProofStatus},
+      </if>
+    </set>
+    where proof_id = #{proofId,jdbcType=VARCHAR} and status = #{fromStatus,jdbcType=INTEGER,javaType=invt.biz.enum.ProofStatus}
+  </update>
+
+  <insert id="saveProof" parameterType="invt.model.po.InvtProof">
+    insert into invt_proof (id, proof_id,`status`,biz_id, biz_type,bz_id)
+    values (
+    #{id,jdbcType=BIGINT},
+    #{proofId,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER,javaType=invt.biz.enums.ProofStatus},
+    #{bizId,jdbcType=VARCHAR},
+    #{bizType,jdbcType=INTEGER,javaType=invt.biz.enums.ProofBizType},
+    #{bzId,jdbcType=BIGINT})
+  </insert>
+
+  <select id="selectAvailableProof" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from invt_proof
+    where status in (0,3) and biz_type = #{bizType,jdbcType=INTEGER,javaType=invt.biz.enums.ProofBizType}
+  </select>
+
+</mapper>

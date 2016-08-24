@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="applicationContextUtil" class="invt.biz.utils.ApplicationContextUtil"/>
+
+	<context:component-scan base-package="invt.api;invt.biz;invt.dao;invt.topic">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+
+	<bean id="producerConfig" class="com.nonobank.mq.config.ProducerConfig">
+		<constructor-arg value="${send.groupname}" />
+		<constructor-arg value="${send.storetype}" />
+		<constructor-arg value="${send.topicname}" />
+	</bean>
+
+	<!--
+	<bean id="factory" class="com.nonobank.architecture.lock.LockFactory">
+		<constructor-arg name="zkConfig" ref="zkconfig"/>
+	</bean>
+
+	<bean id="zkconfig" class="com.nonobank.architecture.lock.config.ZkConfig">
+		<property name="serverAddr" value="127.0.0.1:2181"/>
+	</bean>
+	-->
+</beans>

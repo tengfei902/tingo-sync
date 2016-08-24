@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="invt.dao.local.FinancePlanDao" >
+  <resultMap id="BaseResultMap" type="invt.model.po.FinancePlan" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="TINYINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="price_finish" property="priceFinish" jdbcType="DECIMAL" />
+    <result column="price_adjust" property="priceAdjust" jdbcType="DECIMAL" />
+    <result column="price_increment" property="priceIncrement" jdbcType="DECIMAL" />
+    <result column="price_min" property="priceMin" jdbcType="DECIMAL" />
+    <result column="price_max" property="priceMax" jdbcType="DECIMAL" />
+    <result column="rate_min" property="rateMin" jdbcType="DECIMAL" />
+    <result column="rate_max" property="rateMax" jdbcType="DECIMAL" />
+    <result column="stop_bidding_days" property="stopBiddingDays" jdbcType="INTEGER" />
+    <result column="auto_bid" property="autoBid" jdbcType="INTEGER" />
+    <result column="earnings_intro" property="earningsIntro" jdbcType="VARCHAR" />
+    <result column="buy_limit" property="buyLimit" jdbcType="VARCHAR" />
+    <result column="redeem_normal_way" property="redeemNormalWay" jdbcType="VARCHAR" />
+    <result column="redeem_other_way" property="redeemOtherWay" jdbcType="VARCHAR" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="finish_date" property="finishDate" jdbcType="DATE" />
+    <result column="slogan" property="slogan" jdbcType="VARCHAR" />
+    <result column="expect" property="expect" jdbcType="INTEGER" />
+    <result column="expect_unit" property="expectUnit" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="DATE" />
+    <result column="operator" property="operator" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="TINYINT" />
+    <result column="transfer_enable" property="transferEnable" jdbcType="INTEGER" />
+    <result column="need_bankcode" property="needBankcode" jdbcType="TINYINT" />
+    <result column="template" property="template" jdbcType="CHAR" />
+    <result column="show_scope" property="showScope" jdbcType="TINYINT" />
+    <result column="suffix" property="suffix" jdbcType="VARCHAR" />
+    <result column="rate_show" property="rateShow" jdbcType="VARCHAR" />
+    <result column="user_level" property="userLevel" jdbcType="VARCHAR" />
+    <result column="show_content" property="showContent" jdbcType="VARCHAR" />
+    <result column="use_coupon" property="useCoupon" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="collection_mode" property="collectionMode" jdbcType="INTEGER" />
+    <result column="borrows_range" property="borrowsRange" jdbcType="VARCHAR" />
+    <result column="recommend_scope" property="recommendScope" jdbcType="TINYINT" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_price" property="productPrice" jdbcType="DECIMAL" />
+    <result column="product_nono_price" property="productNonoPrice" jdbcType="DECIMAL" />
+    <result column="product_hot" property="productHot" jdbcType="INTEGER" />
+    <result column="product_mobile_img" property="productMobileImg" jdbcType="VARCHAR" />
+    <result column="product_pc_img" property="productPcImg" jdbcType="VARCHAR" />
+    <result column="is_auto_clone" property="isAutoClone" jdbcType="TINYINT" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="invt.model.po.FinancePlanWithBLOBs" extends="BaseResultMap" >
+    <result column="explanation" property="explanation" jdbcType="LONGVARCHAR" />
+    <result column="protect_plan" property="protectPlan" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, scope, price, price_finish, price_adjust, price_increment, price_min, 
+    price_max, rate_min, rate_max, stop_bidding_days, auto_bid, earnings_intro, buy_limit, 
+    redeem_normal_way, redeem_other_way, publish_date, finish_date, slogan, expect, expect_unit, 
+    start_date, operator, STATUS, transfer_enable, need_bankcode, template, show_scope, 
+    suffix, rate_show, user_level, show_content, use_coupon, version, create_time, update_time, 
+    collection_mode, borrows_range, recommend_scope, product_name, product_price, product_nono_price, 
+    product_hot, product_mobile_img, product_pc_img, is_auto_clone, product_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    explanation, protect_plan
+  </sql>
+  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from finance_plan
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="invt.model.po.FinancePlanWithBLOBs" >
+    insert into finance_plan (id, title, scope, 
+      price, price_finish, price_adjust, 
+      price_increment, price_min, price_max, 
+      rate_min, rate_max, stop_bidding_days, 
+      auto_bid, earnings_intro, buy_limit, 
+      redeem_normal_way, redeem_other_way, publish_date, 
+      finish_date, slogan, expect, 
+      expect_unit, start_date, operator, 
+      STATUS, transfer_enable, need_bankcode, 
+      template, show_scope, suffix, 
+      rate_show, user_level, show_content, 
+      use_coupon, version, create_time, 
+      update_time, collection_mode, borrows_range, 
+      recommend_scope, product_name, product_price, 
+      product_nono_price, product_hot, product_mobile_img, 
+      product_pc_img, is_auto_clone, product_type, 
+      explanation, protect_plan)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{scope,jdbcType=TINYINT}, 
+      #{price,jdbcType=DECIMAL}, #{priceFinish,jdbcType=DECIMAL}, #{priceAdjust,jdbcType=DECIMAL}, 
+      #{priceIncrement,jdbcType=DECIMAL}, #{priceMin,jdbcType=DECIMAL}, #{priceMax,jdbcType=DECIMAL}, 
+      #{rateMin,jdbcType=DECIMAL}, #{rateMax,jdbcType=DECIMAL}, #{stopBiddingDays,jdbcType=INTEGER}, 
+      #{autoBid,jdbcType=BIT}, #{earningsIntro,jdbcType=VARCHAR}, #{buyLimit,jdbcType=VARCHAR}, 
+      #{redeemNormalWay,jdbcType=VARCHAR}, #{redeemOtherWay,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, 
+      #{finishDate,jdbcType=DATE}, #{slogan,jdbcType=VARCHAR}, #{expect,jdbcType=INTEGER}, 
+      #{expectUnit,jdbcType=INTEGER}, #{startDate,jdbcType=DATE}, #{operator,jdbcType=BIGINT}, 
+      #{status,jdbcType=TINYINT}, #{transferEnable,jdbcType=BIT}, #{needBankcode,jdbcType=TINYINT}, 
+      #{template,jdbcType=CHAR}, #{showScope,jdbcType=TINYINT}, #{suffix,jdbcType=VARCHAR}, 
+      #{rateShow,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}, #{showContent,jdbcType=VARCHAR}, 
+      #{useCoupon,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{collectionMode,jdbcType=INTEGER}, #{borrowsRange,jdbcType=VARCHAR}, 
+      #{recommendScope,jdbcType=TINYINT}, #{productName,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, 
+      #{productNonoPrice,jdbcType=DECIMAL}, #{productHot,jdbcType=BIT}, #{productMobileImg,jdbcType=VARCHAR}, 
+      #{productPcImg,jdbcType=VARCHAR}, #{isAutoClone,jdbcType=TINYINT}, #{productType,jdbcType=VARCHAR}, 
+      #{explanation,jdbcType=LONGVARCHAR}, #{protectPlan,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateById" parameterType="invt.model.po.FinancePlan" >
+    update finance_plan
+    set title = #{title,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=TINYINT},
+      price = #{price,jdbcType=DECIMAL},
+      price_finish = #{priceFinish,jdbcType=DECIMAL},
+      price_adjust = #{priceAdjust,jdbcType=DECIMAL},
+      price_increment = #{priceIncrement,jdbcType=DECIMAL},
+      price_min = #{priceMin,jdbcType=DECIMAL},
+      price_max = #{priceMax,jdbcType=DECIMAL},
+      rate_min = #{rateMin,jdbcType=DECIMAL},
+      rate_max = #{rateMax,jdbcType=DECIMAL},
+      stop_bidding_days = #{stopBiddingDays,jdbcType=INTEGER},
+      auto_bid = #{autoBid,jdbcType=BIT},
+      earnings_intro = #{earningsIntro,jdbcType=VARCHAR},
+      buy_limit = #{buyLimit,jdbcType=VARCHAR},
+      redeem_normal_way = #{redeemNormalWay,jdbcType=VARCHAR},
+      redeem_other_way = #{redeemOtherWay,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      finish_date = #{finishDate,jdbcType=DATE},
+      slogan = #{slogan,jdbcType=VARCHAR},
+      expect = #{expect,jdbcType=INTEGER},
+      expect_unit = #{expectUnit,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=DATE},
+      operator = #{operator,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=TINYINT},
+      transfer_enable = #{transferEnable,jdbcType=BIT},
+      need_bankcode = #{needBankcode,jdbcType=TINYINT},
+      template = #{template,jdbcType=CHAR},
+      show_scope = #{showScope,jdbcType=TINYINT},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      rate_show = #{rateShow,jdbcType=VARCHAR},
+      user_level = #{userLevel,jdbcType=VARCHAR},
+      show_content = #{showContent,jdbcType=VARCHAR},
+      use_coupon = #{useCoupon,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      collection_mode = #{collectionMode,jdbcType=INTEGER},
+      borrows_range = #{borrowsRange,jdbcType=VARCHAR},
+      recommend_scope = #{recommendScope,jdbcType=TINYINT},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DECIMAL},
+      product_nono_price = #{productNonoPrice,jdbcType=DECIMAL},
+      product_hot = #{productHot,jdbcType=BIT},
+      product_mobile_img = #{productMobileImg,jdbcType=VARCHAR},
+      product_pc_img = #{productPcImg,jdbcType=VARCHAR},
+      is_auto_clone = #{isAutoClone,jdbcType=TINYINT},
+      product_type = #{productType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getCollectionModeById" resultMap="BaseResultMap" >
+    select collection_mode from finance_plan where id=#{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectCollectionModeById" resultType="invt.biz.enums.CollectionMode" >
+    select collection_mode from finance_plan where id=#{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="checkFpStatus" resultType="java.lang.Long">
+    select id from finance_plan where id=#{id,jdbcType=BIGINT}
+    and status in 
+    <foreach collection="statusList" item="status" index="index" open="(" close=")" separator=",">
+      #{status}
+    </foreach>
+  </select>
+</mapper>
