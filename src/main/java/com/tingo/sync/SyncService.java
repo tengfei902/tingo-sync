@@ -1,7 +1,6 @@
 package com.tingo.sync;
 
 import com.tingo.dto.SyncFieldDTO;
-import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,6 @@ public class SyncService {
     }
 
     private void saveToTarget(SyncTableDTO syncTable,List originData,List syncLinks,List<SyncFieldDTO> fields ) {
-
+        
     }
 }
