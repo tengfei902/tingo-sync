@@ -1,6 +1,7 @@
 package com.tingo.sync;
 
 import com.tingo.dto.SyncFieldDTO;
+import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
 
 import java.util.List;
@@ -11,8 +12,9 @@ import java.util.Map;
  */
 public interface DataSync {
     List<SyncTableDTO> getSyncTables();
-    Map<Long,List<SyncFieldDTO>> getFieldMap();
-    List queryFromOrigin(SyncTableDTO syncTable,List<SyncFieldDTO> syncFields);
-    List queryFromLink(SyncTableDTO syncTable);
-    void saveToTarget();
+    List<SyncFieldDTO> getSyncFields();
+    List<SyncLinkDTO> getSyncLinks(Long tableId);
+    List<Long> getSyncIds(SyncTableDTO table);
+    void doSave(List<Long> ids,SyncTableDTO table);
+    void doUpdate(List<Long> ids,Map<Long,SyncLinkDTO> map,SyncTableDTO table);
 }

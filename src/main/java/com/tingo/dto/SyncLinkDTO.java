@@ -9,6 +9,7 @@ public class SyncLinkDTO {
     private Long targetId;
     private Long tableId;
     private String tableName;
+    private Integer status;
 
     public Long getId() {
         return id;
