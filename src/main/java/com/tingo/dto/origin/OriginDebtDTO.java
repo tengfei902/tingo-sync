@@ -4,10 +4,19 @@ package com.tingo.dto.origin;
  * Created by user on 16/8/29.
  */
 public class OriginDebtDTO {
+    private Long id;
     private String bmbh;
     private String bmdm;
     private String bmmc;
     private String sjbm;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getBmbh() {
         return bmbh;

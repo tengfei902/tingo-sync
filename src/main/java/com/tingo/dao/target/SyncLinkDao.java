@@ -21,4 +21,8 @@ public class SyncLinkDao extends TargetDao<SyncLinkDTO> {
         params.put("status", StatusType.VALID.getValue());
         return super.query(GET_SYNC_LINKS_MAPPER,params);
     }
+
+    public Integer save(SyncLinkDTO syncLink) {
+        return super.insert("",syncLink);
+    }
 }

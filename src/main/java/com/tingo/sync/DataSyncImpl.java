@@ -6,7 +6,6 @@ import com.tingo.dto.SyncFieldDTO;
 import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
 import com.tingo.service.SyncServiceFactory;
-import com.tingo.sync.origin.OriginFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
