@@ -1,5 +1,7 @@
 package com.tingo.dto;
 
+import com.tingo.enums.SyncType;
+
 /**
  * Created by user on 16/8/24.
  */
@@ -7,6 +9,7 @@ public class SyncTableDTO {
     private Long id;
     private String originTable;
     private String targetTable;
+    private SyncType syncType;
 
     public Long getId() {
         return id;
@@ -30,5 +33,13 @@ public class SyncTableDTO {
 
     public void setTargetTable(String targetTable) {
         this.targetTable = targetTable;
+    }
+
+    public SyncType getSyncType() {
+        return syncType;
+    }
+
+    public void setSyncType(SyncType syncType) {
+        this.syncType = syncType;
     }
 }

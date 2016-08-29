@@ -5,6 +5,7 @@ import com.tingo.dao.target.SyncTableDao;
 import com.tingo.dto.SyncFieldDTO;
 import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
+import com.tingo.service.SyncServiceFactory;
 import com.tingo.sync.origin.OriginFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class DataSyncImpl implements DataSync {
     @Autowired
     private SyncLinkDao syncLinkDao;
     @Autowired
-    private OriginFactory originFactory;
+    private SyncServiceFactory syncServiceFactory;
 
     @Override
     public List<SyncTableDTO> getSyncTables() {
@@ -41,16 +42,16 @@ public class DataSyncImpl implements DataSync {
 
     @Override
     public List<Long> getSyncIds(SyncTableDTO table) {
-        return originFactory.getOriginDao(table.getOriginTable()).queryIds();
+        return syncServiceFactory.getSyncService(table.getSyncType()).queryIds();
     }
 
     @Override
     public void doSave(List<Long> ids, SyncTableDTO table) {
-        
+        syncServiceFactory.getSyncService(table.getSyncType()).save(ids,table);
     }
 
     @Override
     public void doUpdate(List<Long> ids, Map<Long, SyncLinkDTO> map, SyncTableDTO table) {
-
+        syncServiceFactory.getSyncService(table.getSyncType()).update(ids,map,table);
     }
 }
