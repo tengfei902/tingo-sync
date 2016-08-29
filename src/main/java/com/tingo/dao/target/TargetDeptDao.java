@@ -18,4 +18,12 @@ public class TargetDeptDao extends TargetDao<HrmDepartment> {
     public Integer saveDept(HrmDepartment dept) {
         return null;
     }
+
+    public Integer update(HrmDepartment department) {
+        return null;
+    }
+
+    public List<Long> queryIds() {
+        return null;
+    }
 }

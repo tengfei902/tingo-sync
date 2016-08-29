@@ -8,8 +8,6 @@ import com.tingo.dto.origin.OriginDebtDTO;
 import com.tingo.dto.target.HrmDepartment;
 import com.tingo.enums.SyncType;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,10 +45,14 @@ public class DebtSyncService extends AbstractSyncService {
     @Override
     public void update(List<Long> ids, Map<Long, SyncLinkDTO> map, SyncTableDTO table) {
         List<OriginDebtDTO> originDebtList = originDebtDao.queryByIds(ids);
+        for(OriginDebtDTO originDebt:originDebtList) {
+            HrmDepartment department = buildHrmDepartment(originDebt);
+            targetDeptDao.update(department);
+        }
     }
 
     @Override
     public List<Long> queryIds() {
-        return null;
+        return targetDeptDao.queryIds();
     }
 }
