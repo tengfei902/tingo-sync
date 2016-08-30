@@ -16,6 +16,7 @@ public class TargetDeptDao extends TargetDao<HrmDepartment> {
     }
 
     public Integer saveDept(HrmDepartment dept) {
+//        return super.insert();
         return null;
     }
 

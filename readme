@@ -1,3 +1,5 @@
 /Users/user/workspace/invt
 
 mybatis-generator:generate -e
+
+useGeneratedKeys="true" keyProperty="id"

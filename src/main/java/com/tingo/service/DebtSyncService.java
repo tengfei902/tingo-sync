@@ -37,7 +37,15 @@ public class DebtSyncService extends AbstractSyncService {
     }
 
     private HrmDepartment buildHrmDepartment(OriginDebtDTO oridept) {
-        return null;
+        HrmDepartment dept = new HrmDepartment();
+        dept.setDepartmentCode(oridept.getBmdm());
+        dept.setDepartmentName(oridept.getBmmc());
+        dept.setDepartmentMark(oridept.getBmmc());
+        dept.setAllSupDeptId(oridept.getSjbm());
+        dept.setSupDeptId(Long.parseLong(oridept.getSjbm()));
+        dept.setSubCompanyId1();
+        dept.setShowOrder();
+        return dept;
     }
 
 
