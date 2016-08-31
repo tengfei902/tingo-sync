@@ -1,7 +1,6 @@
 package com.tingo.service;
 
 import com.tingo.dao.target.SyncLinkDao;
-import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.StatusType;
 import com.tingo.enums.SyncType;

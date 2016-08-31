@@ -1,6 +1,9 @@
 package com.tingo.dao.origin;
 
 import com.tingo.dto.origin.FwBmxx;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface FwBmxxDao {
     /**
@@ -50,4 +53,8 @@ public interface FwBmxxDao {
      * @mbggenerated
      */
     int updateByPrimaryKey(FwBmxx record);
+
+    List<String> selectIds();
+
+    List<FwBmxx> selectByIds(@Param("ids") List<String> ids);
 }

@@ -1,14 +1,12 @@
 package com.tingo.service.impl;
 
-import com.tingo.dao.origin.OriginDebtDao;
+import com.tingo.dao.origin.FwBmxxDao;
 import com.tingo.dao.target.HrmDepartmentDao;
-import com.tingo.dto.SyncLinkDTO;
-import com.tingo.dto.SyncTableDTO;
-import com.tingo.dto.origin.OriginDebtDTO;
+import com.tingo.dto.origin.FwBmxx;
 import com.tingo.dto.target.HrmDepartment;
+import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
-import com.tingo.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,7 @@ import java.util.Map;
  */
 public class DebtSyncService extends AbstractSyncService {
     @Autowired
-    private OriginDebtDao originDebtDao;
+    private FwBmxxDao originDebtDao;
     @Autowired
     private HrmDepartmentDao hrmDepartmentDao;
 
@@ -28,41 +26,50 @@ public class DebtSyncService extends AbstractSyncService {
     }
 
     @Override
-    public void save(List<Long> ids, SyncTableDTO table) {
-        List<OriginDebtDTO> originDebtList = originDebtDao.queryByIds(ids);
-        for(OriginDebtDTO oridept:originDebtList) {
-            HrmDepartment hrmDepartment = buildHrmDepartment(oridept);
+    public void save(List<String> ids) {
+
+        List<FwBmxx> fwBmxxes = originDebtDao.selectByIds(ids);
+
+        for(FwBmxx fwBmxx:fwBmxxes) {
+            HrmDepartment hrmDepartment = buildHrmDepartment(fwBmxx);
             hrmDepartmentDao.insert(hrmDepartment);
 
-            super.saveSyncLink(oridept.getId(),hrmDepartment.getId());
+            super.saveSyncLink(Long.parseLong(fwBmxx.getKsid()),hrmDepartment.getId());
         }
     }
 
-    private HrmDepartment buildHrmDepartment(OriginDebtDTO oridept) {
+    private HrmDepartment buildHrmDepartment(FwBmxx fwBmxx) {
         HrmDepartment dept = new HrmDepartment();
-        dept.setDepartmentcode(oridept.getBmdm());
-        dept.setDepartmentname(oridept.getBmmc());
-        dept.setDepartmentmark(oridept.getBmmc());
-        dept.setAllsupdepid(oridept.getSjbm());
-        dept.setSupdepid(Long.parseLong(oridept.getSjbm()));
-        dept.setSubcompanyid1(Constants.Properties.SUB_COMPANY_ID);
-        dept.setShoworder(oridept.getId());
+        dept.setDepartmentmark(fwBmxx.getKsmc());
+        dept.setDepartmentname(fwBmxx.getKsmc());
+        dept.setSubcompanyid1(1L);
+        if(null != fwBmxx.getSjid()) {
+            if("*".equals(fwBmxx.getSjid())) {
+                dept.setSupdepid(0L);
+            } else {
+                dept.setSupdepid(Long.parseLong(fwBmxx.getSjid()));
+            }
+        }
+        dept.setDepartmentcode(fwBmxx.getKsdm());
+        if(null != fwBmxx.getKsdm()) {
+            dept.setShoworder(Long.parseLong(fwBmxx.getKsdm()));
+        }
         return dept;
     }
 
 
 
     @Override
-    public void update(List<Long> ids, Map<Long, SyncLinkDTO> map, SyncTableDTO table) {
-        List<OriginDebtDTO> originDebtList = originDebtDao.queryByIds(ids);
-        for(OriginDebtDTO originDebt:originDebtList) {
+    public void update(List<String> ids, Map<String, SyncLink> map) {
+        List<FwBmxx> originDebtList = originDebtDao.selectByIds(ids);
+        for(FwBmxx originDebt:originDebtList) {
             HrmDepartment department = buildHrmDepartment(originDebt);
             hrmDepartmentDao.updateByPrimaryKey(department);
         }
     }
 
     @Override
-    public List<Long> queryIds() {
-        return hrmDepartmentDao.queryIds();
+    public List<String> queryIds() {
+        return originDebtDao.selectIds();
     }
 }

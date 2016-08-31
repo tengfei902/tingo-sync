@@ -1,8 +1,7 @@
 package com.tingo.sync;
 
-import com.tingo.dto.SyncFieldDTO;
-import com.tingo.dto.SyncLinkDTO;
-import com.tingo.dto.SyncTableDTO;
+import com.tingo.dto.target.SyncLink;
+import com.tingo.enums.SyncType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,30 +19,28 @@ public class SyncService {
     private DataSync dataSync;
 
     public void doSync() {
-        List<SyncTableDTO> tables = dataSync.getSyncTables();
-
-        for(SyncTableDTO syncTable:tables) {
-            syncTableData(syncTable);
+        for(SyncType syncType:SyncType.values()) {
+            syncTableData(syncType);
         }
     }
 
-    private void syncTableData(SyncTableDTO syncTable) {
-        List<Long> syncIds = dataSync.getSyncIds(syncTable);
-        List<Long> newIds = new ArrayList<>();
-        List<Long> existedIds = new ArrayList<>();
+    private void syncTableData(SyncType syncType) {
+        List<String> syncIds = dataSync.getSyncIds(syncType);
+        List<String> newIds = new ArrayList<>();
+        List<String> existedIds = new ArrayList<>();
 
-        List<SyncLinkDTO> links = dataSync.getSyncLinks(syncTable.getId());
-        Map<Long,SyncLinkDTO> linkMap = new HashMap<>();
-        for(SyncLinkDTO link:links) {
-            linkMap.put(link.getOriginId(),link);
-            if(syncIds.contains(link.getOriginId())) {
-                existedIds.add(link.getOriginId());
+        List<SyncLink> links = dataSync.getSyncLinks(syncType);
+        Map<String,SyncLink> linkMap = new HashMap<>();
+        for(SyncLink link:links) {
+            linkMap.put(link.getOriginId().toString(),link);
+            if(syncIds.contains(link.getOriginId().toString())) {
+                existedIds.add(link.getOriginId().toString());
                 continue;
             }
-            newIds.add(link.getOriginId());
+            newIds.add(link.getOriginId().toString());
         }
 
-        dataSync.doSave(newIds,syncTable);
-        dataSync.doUpdate(existedIds,linkMap,syncTable);
+        dataSync.doSave(newIds,syncType);
+        dataSync.doUpdate(existedIds,linkMap,syncType);
     }
 }

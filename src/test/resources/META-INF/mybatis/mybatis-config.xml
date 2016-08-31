@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="investProof" type="invt.model.po.InvtProof"/>
+        <typeAlias alias="invtRepayTransferHistory" type="invt.model.po.InvtRepayTransferHistory"/>
+    </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="invt.dao.handler.ProofStatusHandler" javaType="invt.biz.enums.ProofStatus" jdbcType="INTEGER"/>
+        <typeHandler handler="invt.dao.handler.ProofBizTypeHandler" javaType="invt.biz.enums.ProofBizType" jdbcType="INTEGER"/>
+        <typeHandler handler="invt.dao.handler.AccountTypeHandler" javaType="invt.biz.enums.AccountType" jdbcType="INTEGER"/>
+        <typeHandler handler="invt.dao.handler.RepayTransferTypeHandler" javaType="invt.biz.enums.RepayTransferType" jdbcType="INTEGER"/>
+        <typeHandler handler="invt.dao.handler.CollectionModeHandler" javaType="invt.biz.enums.CollectionMode" jdbcType="INTEGER"/>
+    </typeHandlers>
+
+    <mappers>
+    </mappers>
+</configuration>

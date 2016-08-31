@@ -1,10 +1,8 @@
 package com.tingo.sync;
 
 import com.tingo.dao.target.SyncLinkDao;
-import com.tingo.dao.target.SyncTableDao;
-import com.tingo.dto.SyncFieldDTO;
-import com.tingo.dto.SyncLinkDTO;
-import com.tingo.dto.SyncTableDTO;
+import com.tingo.dto.target.SyncLink;
+import com.tingo.enums.SyncType;
 import com.tingo.service.SyncServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,40 +16,27 @@ import java.util.Map;
 @Service
 public class DataSyncImpl implements DataSync {
     @Autowired
-    private SyncTableDao syncTableDao;
-    @Autowired
     private SyncLinkDao syncLinkDao;
     @Autowired
     private SyncServiceFactory syncServiceFactory;
-
     @Override
-    public List<SyncTableDTO> getSyncTables() {
-        return syncTableDao.getSyncTables();
-    }
-
-    @Override
-    public List<SyncFieldDTO> getSyncFields() {
-        return null;
-    }
-
-    @Override
-    public List<SyncLinkDTO> getSyncLinks(Long tableId) {
+    public List<SyncLink> getSyncLinks(SyncType syncType) {
 //        return syncLinkDao.getSyncLinkList(tableId);
         return null;
     }
 
     @Override
-    public List<Long> getSyncIds(SyncTableDTO table) {
-        return syncServiceFactory.getSyncService(table.getSyncType()).queryIds();
+    public List<String> getSyncIds(SyncType syncType) {
+        return syncServiceFactory.getSyncService(syncType).queryIds();
     }
 
     @Override
-    public void doSave(List<Long> ids, SyncTableDTO table) {
-        syncServiceFactory.getSyncService(table.getSyncType()).save(ids,table);
+    public void doSave(List<String> ids, SyncType syncType) {
+        syncServiceFactory.getSyncService(syncType).save(ids);
     }
 
     @Override
-    public void doUpdate(List<Long> ids, Map<Long, SyncLinkDTO> map, SyncTableDTO table) {
-        syncServiceFactory.getSyncService(table.getSyncType()).update(ids,map,table);
+    public void doUpdate(List<String> ids, Map<String, SyncLink> map, SyncType syncType) {
+        syncServiceFactory.getSyncService(syncType).update(ids,map);
     }
 }
