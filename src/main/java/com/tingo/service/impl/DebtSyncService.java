@@ -8,12 +8,15 @@ import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * Created by user on 16/8/29.
  */
+@Service
 public class DebtSyncService extends AbstractSyncService {
     @Autowired
     private FwBmxxDao originDebtDao;

@@ -1,6 +1,9 @@
 package com.tingo.dao.target;
 
 import com.tingo.dto.target.SyncLink;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
 import java.math.BigDecimal;
 
 public interface SyncLinkDao {
