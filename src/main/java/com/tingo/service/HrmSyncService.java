@@ -1,7 +1,7 @@
 package com.tingo.service;
 
 import com.tingo.dao.origin.OriginHrmDao;
-import com.tingo.dao.target.TargetHrmDao;
+import com.tingo.dao.target.HrmResourceDao;
 import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
 import com.tingo.dto.origin.OriginHrmDTO;
@@ -21,7 +21,7 @@ public class HrmSyncService extends AbstractSyncService {
     @Autowired
     private OriginHrmDao originHrmDao;
     @Autowired
-    private TargetHrmDao targetHrmDao;
+    private HrmResourceDao hrmResourceDao;
 
     @Override
     public SyncType getSyncType() {
@@ -33,7 +33,7 @@ public class HrmSyncService extends AbstractSyncService {
         List<OriginHrmDTO> originHrms = originHrmDao.queryByIds(ids);
         for(OriginHrmDTO originHrm:originHrms) {
             HrmResource hrmResource = buildHrmResource(originHrm);
-            targetHrmDao.save(hrmResource);
+            hrmResourceDao.insert(hrmResource);
 
             super.saveSyncLink(originHrm.getId(),hrmResource.getId());
         }
@@ -48,7 +48,7 @@ public class HrmSyncService extends AbstractSyncService {
         List<OriginHrmDTO> originHrms = originHrmDao.queryByIds(ids);
         for(OriginHrmDTO originHrm:originHrms) {
             HrmResource hrmResource = buildHrmResource(originHrm);
-            targetHrmDao.save(hrmResource);
+            hrmResourceDao.updateByPrimaryKey(hrmResource);
         }
     }
 

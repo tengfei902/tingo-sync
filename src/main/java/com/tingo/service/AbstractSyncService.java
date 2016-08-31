@@ -2,6 +2,7 @@ package com.tingo.service;
 
 import com.tingo.dao.target.SyncLinkDao;
 import com.tingo.dto.SyncLinkDTO;
+import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.StatusType;
 import com.tingo.enums.SyncType;
 import com.tingo.utils.ApplicationContextUtil;
@@ -16,12 +17,12 @@ public abstract class AbstractSyncService implements ISyncService {
     public abstract SyncType getSyncType();
 
     protected void saveSyncLink(Long originId,Long targetId) {
-        SyncLinkDTO syncLink = new SyncLinkDTO();
+        SyncLink syncLink = new SyncLink();
         syncLink.setOriginId(originId);
         syncLink.setTargetId(targetId);
         syncLink.setSyncType(getSyncType());
         syncLink.setStatus(StatusType.VALID.getValue());
 
-        syncLinkDao.save(syncLink);
+        syncLinkDao.insert(syncLink);
     }
 }

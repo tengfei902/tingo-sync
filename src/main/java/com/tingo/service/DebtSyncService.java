@@ -1,6 +1,7 @@
 package com.tingo.service;
 
 import com.tingo.dao.origin.OriginDebtDao;
+import com.tingo.dao.target.HrmDepartmentDao;
 import com.tingo.dao.target.TargetDeptDao;
 import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
@@ -18,7 +19,7 @@ public class DebtSyncService extends AbstractSyncService {
     @Autowired
     private OriginDebtDao originDebtDao;
     @Autowired
-    private TargetDeptDao targetDeptDao;
+    private HrmDepartmentDao hrmDepartmentDao;
 
     @Override
     public SyncType getSyncType() {
@@ -30,7 +31,7 @@ public class DebtSyncService extends AbstractSyncService {
         List<OriginDebtDTO> originDebtList = originDebtDao.queryByIds(ids);
         for(OriginDebtDTO oridept:originDebtList) {
             HrmDepartment hrmDepartment = buildHrmDepartment(oridept);
-            targetDeptDao.saveDept(hrmDepartment);
+            hrmDepartmentDao.insert(hrmDepartment);
 
             super.saveSyncLink(oridept.getId(),hrmDepartment.getId());
         }
@@ -38,13 +39,13 @@ public class DebtSyncService extends AbstractSyncService {
 
     private HrmDepartment buildHrmDepartment(OriginDebtDTO oridept) {
         HrmDepartment dept = new HrmDepartment();
-        dept.setDepartmentCode(oridept.getBmdm());
-        dept.setDepartmentName(oridept.getBmmc());
-        dept.setDepartmentMark(oridept.getBmmc());
-        dept.setAllSupDeptId(oridept.getSjbm());
-        dept.setSupDeptId(Long.parseLong(oridept.getSjbm()));
-        dept.setSubCompanyId1();
-        dept.setShowOrder();
+        dept.setDepartmentcode(oridept.getBmdm());
+        dept.setDepartmentname(oridept.getBmmc());
+        dept.setDepartmentmark(oridept.getBmmc());
+        dept.setAllsupdepid(oridept.getSjbm());
+        dept.setSupdepid(Long.parseLong(oridept.getSjbm()));
+        dept.setSubcompanyid1();
+        dept.setShoworder();
         return dept;
     }
 

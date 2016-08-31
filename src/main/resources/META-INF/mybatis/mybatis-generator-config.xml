@@ -28,11 +28,11 @@
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!--生成映射文件存放位置 -->
-		<sqlMapGenerator targetPackage="/mapper" targetProject="src/main/resources">
+		<sqlMapGenerator targetPackage="/mapper/target" targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置 targetPackage 需要自定义 目录自动生成 basePackage-->
-		<javaClientGenerator targetPackage="com.tingo.dao.ge" targetProject="src/main/java" type="XMLMAPPER">
+		<javaClientGenerator targetPackage="com.tingo.dao.target" targetProject="src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
