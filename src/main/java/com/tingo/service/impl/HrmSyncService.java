@@ -1,4 +1,4 @@
-package com.tingo.service;
+package com.tingo.service.impl;
 
 import com.tingo.dao.origin.OriginHrmDao;
 import com.tingo.dao.target.HrmResourceDao;
@@ -7,6 +7,7 @@ import com.tingo.dto.SyncTableDTO;
 import com.tingo.dto.origin.OriginHrmDTO;
 import com.tingo.dto.target.HrmResource;
 import com.tingo.enums.SyncType;
+import com.tingo.service.AbstractSyncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,9 @@ public class HrmSyncService extends AbstractSyncService {
     }
 
     private HrmResource buildHrmResource(OriginHrmDTO originHrm) {
-        return null;
+        HrmResource hrmResource = new HrmResource();
+        
+        return hrmResource;
     }
 
     @Override

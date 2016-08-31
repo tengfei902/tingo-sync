@@ -1,6 +1,8 @@
 package com.tingo.service;
 
 import com.tingo.enums.SyncType;
+import com.tingo.service.impl.DebtSyncService;
+import com.tingo.service.impl.HrmSyncService;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

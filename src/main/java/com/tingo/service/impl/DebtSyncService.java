@@ -1,4 +1,4 @@
-package com.tingo.service;
+package com.tingo.service.impl;
 
 import com.tingo.dao.origin.OriginDebtDao;
 import com.tingo.dao.target.HrmDepartmentDao;
@@ -7,6 +7,7 @@ import com.tingo.dto.SyncTableDTO;
 import com.tingo.dto.origin.OriginDebtDTO;
 import com.tingo.dto.target.HrmDepartment;
 import com.tingo.enums.SyncType;
+import com.tingo.service.AbstractSyncService;
 import com.tingo.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
