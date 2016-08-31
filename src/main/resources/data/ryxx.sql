@@ -1,4 +1,4 @@
-prompt Importing table fw_ryxx...
+prompt Importing table fw_ryxx
 set feedback off
 set define off
 insert into fw_ryxx (编号, 工号, 姓名, 性别, 部门, 密码)

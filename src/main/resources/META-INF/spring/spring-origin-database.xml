@@ -62,6 +62,6 @@
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="invt.dao.local" />
+		<property name="basePackage" value="com.tingo.dao.origin" />
 	</bean>
 </beans>

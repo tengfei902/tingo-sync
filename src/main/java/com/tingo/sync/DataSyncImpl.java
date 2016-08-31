@@ -36,7 +36,8 @@ public class DataSyncImpl implements DataSync {
 
     @Override
     public List<SyncLinkDTO> getSyncLinks(Long tableId) {
-        return syncLinkDao.getSyncLinkList(tableId);
+//        return syncLinkDao.getSyncLinkList(tableId);
+        return null;
     }
 
     @Override
