@@ -2,12 +2,12 @@ package com.tingo.service;
 
 import com.tingo.dao.origin.OriginDebtDao;
 import com.tingo.dao.target.HrmDepartmentDao;
-import com.tingo.dao.target.TargetDeptDao;
 import com.tingo.dto.SyncLinkDTO;
 import com.tingo.dto.SyncTableDTO;
 import com.tingo.dto.origin.OriginDebtDTO;
 import com.tingo.dto.target.HrmDepartment;
 import com.tingo.enums.SyncType;
+import com.tingo.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +44,8 @@ public class DebtSyncService extends AbstractSyncService {
         dept.setDepartmentmark(oridept.getBmmc());
         dept.setAllsupdepid(oridept.getSjbm());
         dept.setSupdepid(Long.parseLong(oridept.getSjbm()));
-        dept.setSubcompanyid1();
-        dept.setShoworder();
+        dept.setSubcompanyid1(Constants.Properties.SUB_COMPANY_ID);
+        dept.setShoworder(oridept.getId());
         return dept;
     }
 
@@ -56,12 +56,12 @@ public class DebtSyncService extends AbstractSyncService {
         List<OriginDebtDTO> originDebtList = originDebtDao.queryByIds(ids);
         for(OriginDebtDTO originDebt:originDebtList) {
             HrmDepartment department = buildHrmDepartment(originDebt);
-            targetDeptDao.update(department);
+            hrmDepartmentDao.updateByPrimaryKey(department);
         }
     }
 
     @Override
     public List<Long> queryIds() {
-        return targetDeptDao.queryIds();
+        return hrmDepartmentDao.queryIds();
     }
 }

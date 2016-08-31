@@ -2,6 +2,7 @@ package com.tingo.dao.target;
 
 import com.tingo.dto.target.HrmDepartment;
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface HrmDepartmentDao {
     /**
@@ -51,4 +52,6 @@ public interface HrmDepartmentDao {
      * @mbggenerated
      */
     int updateByPrimaryKey(HrmDepartment record);
+
+    List<Long> queryIds();
 }
