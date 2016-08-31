@@ -111,4 +111,20 @@
       SJID = #{sjid,jdbcType=VARCHAR}
     where KSID = #{ksid,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="selectIds" resultType="java.lang.String">
+    select KSID from FW_BMXX
+  </select>
+
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from FW_BMXX
+    where KSID IN
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
 </mapper>

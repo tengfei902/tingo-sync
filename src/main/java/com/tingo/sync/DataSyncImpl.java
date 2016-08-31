@@ -21,8 +21,7 @@ public class DataSyncImpl implements DataSync {
     private SyncServiceFactory syncServiceFactory;
     @Override
     public List<SyncLink> getSyncLinks(SyncType syncType) {
-//        return syncLinkDao.getSyncLinkList(tableId);
-        return null;
+       return syncLinkDao.selectSyncLinks(syncType.name());
     }
 
     @Override

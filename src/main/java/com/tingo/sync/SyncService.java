@@ -24,20 +24,24 @@ public class SyncService {
         }
     }
 
-    private void syncTableData(SyncType syncType) {
+    public void syncTableData(SyncType syncType) {
         List<String> syncIds = dataSync.getSyncIds(syncType);
         List<String> newIds = new ArrayList<>();
         List<String> existedIds = new ArrayList<>();
 
         List<SyncLink> links = dataSync.getSyncLinks(syncType);
         Map<String,SyncLink> linkMap = new HashMap<>();
+
         for(SyncLink link:links) {
             linkMap.put(link.getOriginId().toString(),link);
-            if(syncIds.contains(link.getOriginId().toString())) {
-                existedIds.add(link.getOriginId().toString());
+        }
+
+        for(String syncId:syncIds) {
+            if(linkMap.containsKey(syncId)) {
+                existedIds.add(syncId);
                 continue;
             }
-            newIds.add(link.getOriginId().toString());
+            newIds.add(syncId);
         }
 
         dataSync.doSave(newIds,syncType);

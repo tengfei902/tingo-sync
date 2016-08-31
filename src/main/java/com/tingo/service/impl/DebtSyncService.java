@@ -7,8 +7,10 @@ import com.tingo.dto.target.HrmDepartment;
 import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -28,17 +30,26 @@ public class DebtSyncService extends AbstractSyncService {
         return SyncType.dept;
     }
 
+    @Transactional
     @Override
     public void save(List<String> ids) {
 
+        if(CollectionUtils.isEmpty(ids)) {
+            return;
+        }
         List<FwBmxx> fwBmxxes = originDebtDao.selectByIds(ids);
 
         for(FwBmxx fwBmxx:fwBmxxes) {
             HrmDepartment hrmDepartment = buildHrmDepartment(fwBmxx);
             hrmDepartmentDao.insert(hrmDepartment);
-
-            super.saveSyncLink(Long.parseLong(fwBmxx.getKsid()),hrmDepartment.getId());
+            hrmDepartment = hrmDepartmentDao.selectByFid(fwBmxx.getKsid());
+            super.saveSyncLink(Long.parseLong(hrmDepartment.getFid()),hrmDepartment.getId());
         }
+        updateSupDebtId();
+    }
+
+    private void updateSupDebtId() {
+        hrmDepartmentDao.updateSupDebtId();
     }
 
     private HrmDepartment buildHrmDepartment(FwBmxx fwBmxx) {
@@ -57,6 +68,7 @@ public class DebtSyncService extends AbstractSyncService {
         if(null != fwBmxx.getKsdm()) {
             dept.setShoworder(Long.parseLong(fwBmxx.getKsdm()));
         }
+        dept.setFid(fwBmxx.getKsid());
         return dept;
     }
 
@@ -65,6 +77,9 @@ public class DebtSyncService extends AbstractSyncService {
     @Override
     public void update(List<String> ids, Map<String, SyncLink> map) {
         List<FwBmxx> originDebtList = originDebtDao.selectByIds(ids);
+        if(CollectionUtils.isEmpty(originDebtList)) {
+            return;
+        }
         for(FwBmxx originDebt:originDebtList) {
             HrmDepartment department = buildHrmDepartment(originDebt);
             hrmDepartmentDao.updateByPrimaryKey(department);

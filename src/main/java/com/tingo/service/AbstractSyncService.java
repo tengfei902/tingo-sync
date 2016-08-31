@@ -19,7 +19,7 @@ public abstract class AbstractSyncService implements ISyncService {
         SyncLink syncLink = new SyncLink();
         syncLink.setOriginId(originId);
         syncLink.setTargetId(targetId);
-        syncLink.setSyncType(getSyncType());
+        syncLink.setSyncType(getSyncType().name());
         syncLink.setStatus(StatusType.VALID.getValue());
 
         syncLinkDao.insert(syncLink);

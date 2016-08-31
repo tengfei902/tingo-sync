@@ -1,6 +1,8 @@
 package com.tingo.dao.target;
 
 import com.tingo.dto.target.HrmDepartment;
+import org.apache.ibatis.annotations.Param;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -54,4 +56,8 @@ public interface HrmDepartmentDao {
     int updateByPrimaryKey(HrmDepartment record);
 
     List<Long> queryIds();
+
+    Integer updateSupDebtId();
+
+    HrmDepartment selectByFid(@Param("fid") String fid);
 }

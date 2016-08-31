@@ -1,10 +1,13 @@
 package com.tingo.dao.target;
 
 import com.tingo.dto.target.SyncLink;
+import com.tingo.enums.SyncType;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface SyncLinkDao {
     /**
@@ -54,4 +57,6 @@ public interface SyncLinkDao {
      * @mbggenerated
      */
     int updateByPrimaryKey(SyncLink record);
+
+    List<SyncLink> selectSyncLinks(@Param("syncType") String syncType);
 }
