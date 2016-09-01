@@ -55,4 +55,8 @@ public interface HrmResourceDao {
     int updateByPrimaryKey(HrmResource record);
 
     HrmResource selectByFid(@Param("fid") String fid);
+
+    Long getHrmId();
+
+    Integer updateHrmId(@Param("id") Long id);
 }

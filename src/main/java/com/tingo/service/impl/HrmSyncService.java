@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class HrmSyncService extends AbstractSyncService {
     }
 
     @Override
+    @Transactional
     public void save(List<String> ids) {
 
         if(CollectionUtils.isEmpty(ids)) {
@@ -95,13 +97,25 @@ public class HrmSyncService extends AbstractSyncService {
         hrmResource.setPinyinlastname(PinyinUtils.getFirstSpell(fwRyxx.getXm()));
         hrmResource.setFid(fwRyxx.getZgid());
 
+        hrmResource.setId(getHrmId());
+
         return hrmResource;
     }
 
+    private Long getHrmId() {
+        Long id = hrmResourceDao.getHrmId();
+        hrmResourceDao.updateHrmId(id);
+        return id;
+    }
+
     @Override
+    @Transactional
     public void update(List<String> ids, Map<String, SyncLink> map) {
 
-        List<FwRyxx> originHrms = originHrmDao.selectByIds(ids);
+        List<FwRyxx> originHrms = selectByIds(ids);
+        if(CollectionUtils.isEmpty(originHrms)) {
+            return;
+        }
         for(FwRyxx originHrm:originHrms) {
             HrmResource hrmResource = buildHrmResource(originHrm);
             hrmResourceDao.updateByPrimaryKey(hrmResource);
