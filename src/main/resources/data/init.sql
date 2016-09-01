@@ -1,8 +1,7 @@
 CREATE table sync_config
-(id number(32,0) PRIMARY KEY,
- property_name VARCHAR(32) not null,
- property_value varchar(256) not null,
- status NUMBER(1));
+ (property_value varchar(256) not null);
+
+ insert into sync_config values('a72995a1705a1a5e2f9c3eed633c93a1');
 
  create table synclink
 (id number(32,0) primary key,
@@ -18,6 +17,9 @@ ALTER TRIGGER SYNCLINK_TRIGGER ENABLE;
 
 alter table hrmdepartment add fid varchar(256);
 alter table hrmresource add fid varchar(256);
+
+
+
 
 
 
