@@ -58,7 +58,7 @@
 
 	<bean id="originSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="originDataSource" />
-		<property name="mapperLocations" value="classpath:/mapper/origin/*Mapper.xml" />
+		<property name="mapperLocations" value="file:src/main/resources/mapper/origin/*Mapper.xml" />
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

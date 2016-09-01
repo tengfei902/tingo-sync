@@ -1,6 +1,8 @@
 package com.tingo.dao.target;
 
 import com.tingo.dto.target.HrmResource;
+import org.apache.ibatis.annotations.Param;
+
 import java.math.BigDecimal;
 
 public interface HrmResourceDao {
@@ -51,4 +53,6 @@ public interface HrmResourceDao {
      * @mbggenerated
      */
     int updateByPrimaryKey(HrmResource record);
+
+    HrmResource selectByFid(@Param("fid") String fid);
 }

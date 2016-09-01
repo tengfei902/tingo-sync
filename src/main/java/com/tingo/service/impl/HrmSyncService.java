@@ -1,5 +1,6 @@
 package com.tingo.service.impl;
 
+import com.google.common.collect.Lists;
 import com.tingo.dao.origin.FwRyxxDao;
 import com.tingo.dao.target.HrmResourceDao;
 import com.tingo.dto.origin.FwRyxx;
@@ -9,12 +10,14 @@ import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
 import com.tingo.utils.Converter;
 import com.tingo.utils.PinyinUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,14 +40,30 @@ public class HrmSyncService extends AbstractSyncService {
     @Override
     public void save(List<String> ids) {
 
-        List<FwRyxx> originHrms = originHrmDao.selectByIds(ids);
-
+        if(CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        List<FwRyxx> originHrms = selectByIds(ids);
         for(FwRyxx fwRyxx:originHrms) {
-
             HrmResource hrmResource = buildHrmResource(fwRyxx);
             hrmResourceDao.insert(hrmResource);
+            hrmResource = hrmResourceDao.selectByFid(fwRyxx.getZgid());
             super.saveSyncLink(Long.parseLong(fwRyxx.getZgid()),hrmResource.getId());
         }
+    }
+
+    private List<FwRyxx> selectByIds(List<String> ids) {
+        List<FwRyxx> list = new ArrayList<>();
+        List<List<String>> subIds = Lists.partition(ids,100);
+
+        for(List<String> preids:subIds) {
+            List<FwRyxx> originHrms = originHrmDao.selectByIds(preids);
+            if(CollectionUtils.isNotEmpty(originHrms)) {
+                list.addAll(originHrms);
+            }
+        }
+
+        return list;
     }
 
     private HrmResource buildHrmResource(FwRyxx fwRyxx) {
@@ -74,6 +93,7 @@ public class HrmSyncService extends AbstractSyncService {
         hrmResource.setStatus(new BigDecimal(1));
         hrmResource.setIslabouunion("1");
         hrmResource.setPinyinlastname(PinyinUtils.getFirstSpell(fwRyxx.getXm()));
+        hrmResource.setFid(fwRyxx.getZgid());
 
         return hrmResource;
     }

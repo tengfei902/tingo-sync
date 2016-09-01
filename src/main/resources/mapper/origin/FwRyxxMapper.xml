@@ -133,4 +133,19 @@
       DLKL = #{dlkl,jdbcType=VARCHAR}
     where ZGID = #{zgid,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectIds" resultType="java.lang.String">
+    select ZGID from FW_RYXX
+  </select>
+
+  <select id="selectByIds" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from FW_RYXX
+  where ZGID IN
+  <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+  </select>
+
 </mapper>

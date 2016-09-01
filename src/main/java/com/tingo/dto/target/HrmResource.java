@@ -843,6 +843,8 @@ public class HrmResource {
      */
     private String userusbtype;
 
+    private String fid;
+
     public Long getId() {
         return id;
     }
@@ -3345,5 +3347,13 @@ public class HrmResource {
      */
     public void setUserusbtype(String userusbtype) {
         this.userusbtype = userusbtype == null ? null : userusbtype.trim();
+    }
+
+    public String getFid() {
+        return fid;
+    }
+
+    public void setFid(String fid) {
+        this.fid = fid;
     }
 }

@@ -82,6 +82,7 @@ public class DebtSyncService extends AbstractSyncService {
         }
         for(FwBmxx originDebt:originDebtList) {
             HrmDepartment department = buildHrmDepartment(originDebt);
+            department.setId(map.get(originDebt.getKsid()).getTargetId());
             hrmDepartmentDao.updateByPrimaryKey(department);
         }
     }

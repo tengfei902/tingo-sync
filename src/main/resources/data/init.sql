@@ -17,6 +17,7 @@ CREATE OR REPLACE TRIGGER SYNCLINK_TRIGGER before insert on synclink for each ro
 ALTER TRIGGER SYNCLINK_TRIGGER ENABLE;
 
 alter table hrmdepartment add fid varchar(256);
+alter table hrmresource add fid varchar(256);
 
 
 

@@ -1,6 +1,7 @@
 package com.tingo.dao.origin;
 
 import com.tingo.dto.origin.FwRyxx;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public interface FwRyxxDao {
      */
     int updateByPrimaryKey(FwRyxx record);
 
-    List<FwRyxx> selectByIds(List<String> ids);
+    List<FwRyxx> selectByIds(@Param("ids") List<String> ids);
 
     List<String> selectIds();
 }

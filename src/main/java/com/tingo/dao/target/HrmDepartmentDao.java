@@ -60,4 +60,6 @@ public interface HrmDepartmentDao {
     Integer updateSupDebtId();
 
     HrmDepartment selectByFid(@Param("fid") String fid);
+
+    int updateDebt(HrmDepartment department);
 }
