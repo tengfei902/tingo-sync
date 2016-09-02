@@ -1,6 +1,8 @@
 package com.tingo.dao.target;
 
 import com.tingo.dto.target.DocDetail;
+import org.apache.ibatis.annotations.Param;
+
 import java.math.BigDecimal;
 
 public interface DocDetailDao {
@@ -51,4 +53,6 @@ public interface DocDetailDao {
      * @mbggenerated
      */
     int updateByPrimaryKey(DocDetail record);
+
+    DocDetail selectByYYId(@Param("yydocid") String yydocid);
 }

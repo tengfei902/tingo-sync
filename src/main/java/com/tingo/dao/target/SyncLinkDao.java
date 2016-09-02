@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface SyncLinkDao {
     /**
@@ -59,4 +60,8 @@ public interface SyncLinkDao {
     int updateByPrimaryKey(SyncLink record);
 
     List<SyncLink> selectSyncLinks(@Param("syncType") String syncType);
+
+    List<SyncLink> selectAllSyncLinks();
+
+    SyncLink lazeyLoadSyncLink(Map params);
 }

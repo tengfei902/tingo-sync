@@ -2,6 +2,7 @@ package com.tingo.sync;
 
 import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.SyncType;
+import com.tingo.service.SyncServiceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,14 @@ import java.util.Map;
 public class SyncService {
     @Autowired
     private DataSync dataSync;
+    @Autowired
+    private SyncServiceFactory syncServiceFactory;
 
     public void doSync() {
         for(SyncType syncType:SyncType.values()) {
+            if(null == syncServiceFactory.getSyncService(syncType)) {
+                continue;
+            }
             syncTableData(syncType);
         }
     }
