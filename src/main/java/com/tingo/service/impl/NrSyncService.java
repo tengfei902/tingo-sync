@@ -16,7 +16,7 @@ public class NrSyncService extends AbstractSyncService {
 
     @Override
     public SyncType getSyncType() {
-        return null;
+        return SyncType.nr;
     }
 
     @Override
