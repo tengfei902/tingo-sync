@@ -129,4 +129,18 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectByIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from FW_OA_NR
+    where NRID IN
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectIds" resultType="java.lang.String">
+    select NRID from FW_OA_NR
+  </select>
 </mapper>

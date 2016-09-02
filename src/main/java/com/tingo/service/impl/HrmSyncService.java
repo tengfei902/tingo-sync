@@ -9,6 +9,7 @@ import com.tingo.dto.target.SyncLink;
 import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
 import com.tingo.utils.Converter;
+import com.tingo.utils.LocalCache;
 import com.tingo.utils.PinyinUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,27 +46,17 @@ public class HrmSyncService extends AbstractSyncService {
         if(CollectionUtils.isEmpty(ids)) {
             return;
         }
-        List<FwRyxx> originHrms = selectByIds(ids);
-        for(FwRyxx fwRyxx:originHrms) {
-            HrmResource hrmResource = buildHrmResource(fwRyxx);
-            hrmResourceDao.insert(hrmResource);
-            hrmResource = hrmResourceDao.selectByFid(fwRyxx.getZgid());
-            super.saveSyncLink(Long.parseLong(fwRyxx.getZgid()),hrmResource.getId());
-        }
-    }
 
-    private List<FwRyxx> selectByIds(List<String> ids) {
-        List<FwRyxx> list = new ArrayList<>();
-        List<List<String>> subIds = Lists.partition(ids,100);
-
-        for(List<String> preids:subIds) {
-            List<FwRyxx> originHrms = originHrmDao.selectByIds(preids);
-            if(CollectionUtils.isNotEmpty(originHrms)) {
-                list.addAll(originHrms);
+        List<List<String>> idlist = Lists.partition(ids,100);
+        for(List<String> subIdList:idlist) {
+            List<FwRyxx> originHrms = originHrmDao.selectByIds(subIdList);
+            for(FwRyxx fwRyxx:originHrms) {
+                HrmResource hrmResource = buildHrmResource(fwRyxx);
+                hrmResourceDao.insert(hrmResource);
+                hrmResource = hrmResourceDao.selectByFid(fwRyxx.getZgid());
+                super.saveSyncLink(Long.parseLong(fwRyxx.getZgid()),hrmResource.getId());
             }
         }
-
-        return list;
     }
 
     private HrmResource buildHrmResource(FwRyxx fwRyxx) {
@@ -82,7 +73,10 @@ public class HrmSyncService extends AbstractSyncService {
         //hrmResource.setSeclevel();
         hrmResource.setSubcompanyid1(new BigDecimal(1));
         if(!StringUtils.isEmpty(fwRyxx.getSzks())) {
-            hrmResource.setDepartmentid(new BigDecimal(fwRyxx.getSzks()));
+            String deptId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm,fwRyxx.getSzks());
+            if(!StringUtils.isEmpty(deptId)) {
+                hrmResource.setDepartmentid(new BigDecimal(deptId));
+            }
         }
 //        hrmResource.setManagerid();
         hrmResource.setCreaterid(new BigDecimal(1));
@@ -111,14 +105,17 @@ public class HrmSyncService extends AbstractSyncService {
     @Override
     @Transactional
     public void update(List<String> ids, Map<String, SyncLink> map) {
-
-        List<FwRyxx> originHrms = selectByIds(ids);
-        if(CollectionUtils.isEmpty(originHrms)) {
+        if(CollectionUtils.isEmpty(ids)) {
             return;
         }
-        for(FwRyxx originHrm:originHrms) {
-            HrmResource hrmResource = buildHrmResource(originHrm);
-            hrmResourceDao.updateByPrimaryKey(hrmResource);
+
+        List<List<String>> idList = Lists.partition(ids,100);
+        for(List<String> subList:idList) {
+            List<FwRyxx> originHrms = originHrmDao.selectByIds(subList);
+            for(FwRyxx originHrm:originHrms) {
+                HrmResource hrmResource = buildHrmResource(originHrm);
+                hrmResourceDao.updateByPrimaryKey(hrmResource);
+            }
         }
     }
 
