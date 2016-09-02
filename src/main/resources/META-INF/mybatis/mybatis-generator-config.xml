@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 
-	<classPathEntry location="C:\Users\Administrator\.m2\repository\com\oracle\ojdbc14\10.2.0.4.0\ojdbc14-10.2.0.4.0.jar" />
+	<classPathEntry location="H:\Ambient\Database\oracle\product\10.2.0\db_1\jdbc\lib\ojdbc14.jar" />
 
 	<context id="mysqltables" targetRuntime="MyBatis3">
 
@@ -18,7 +18,7 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-						connectionURL="jdbc:oracle:thin:@192.168.1.100:1521:ecology" userId="ecology" password="ecology" />
+						connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="ecology" password="weaver" />
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
@@ -37,7 +37,17 @@
 		</javaClientGenerator>
 
 		<!-- 正式生成之前需要删除 此事例 -->
-		<table tableName="FW_RYXX" domainObjectName="FwRyxx"
+		<table tableName="FW_OA_NR" domainObjectName="FwOaNr"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+		</table>
+		<table tableName="FW_OA_LM" domainObjectName="FwOaLm"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+		</table>
+		<table tableName="FW_XT_FJ" domainObjectName="FwXtFj"
 			   enableCountByExample="false" enableUpdateByExample="false"
 			   enableDeleteByExample="false" enableSelectByExample="false"
 			   selectByExampleQueryId="false">
