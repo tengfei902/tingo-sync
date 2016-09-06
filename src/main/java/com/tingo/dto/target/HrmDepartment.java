@@ -17,8 +17,6 @@ public class HrmDepartment {
     private String zzjgbmfgld;
     private String jzglbmfzr;
     private String jzglbmfgld;
-    private String bmfzr;
-    private String bmfgld;
     private String fid;
 
     public Long getId() {
@@ -131,22 +129,6 @@ public class HrmDepartment {
 
     public void setJzglbmfgld(String jzglbmfgld) {
         this.jzglbmfgld = jzglbmfgld;
-    }
-
-    public String getBmfzr() {
-        return bmfzr;
-    }
-
-    public void setBmfzr(String bmfzr) {
-        this.bmfzr = bmfzr;
-    }
-
-    public String getBmfgld() {
-        return bmfgld;
-    }
-
-    public void setBmfgld(String bmfgld) {
-        this.bmfgld = bmfgld;
     }
 
     public String getFid() {

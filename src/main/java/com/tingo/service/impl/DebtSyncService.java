@@ -37,13 +37,15 @@ public class DebtSyncService extends AbstractSyncService {
         if(CollectionUtils.isEmpty(ids)) {
             return;
         }
-        List<FwBmxx> fwBmxxes = originDebtDao.selectByIds(ids);
+        if(!ids.isEmpty()) {
+            List<FwBmxx> fwBmxxes = originDebtDao.selectByIds(ids);
 
-        for(FwBmxx fwBmxx:fwBmxxes) {
-            HrmDepartment hrmDepartment = buildHrmDepartment(fwBmxx);
-            hrmDepartmentDao.insert(hrmDepartment);
-            hrmDepartment = hrmDepartmentDao.selectByFid(fwBmxx.getKsid());
-            super.saveSyncLink(Long.parseLong(hrmDepartment.getFid()),hrmDepartment.getId());
+            for (FwBmxx fwBmxx : fwBmxxes) {
+                HrmDepartment hrmDepartment = buildHrmDepartment(fwBmxx);
+                hrmDepartmentDao.insert(hrmDepartment);
+                hrmDepartment = hrmDepartmentDao.selectByFid(fwBmxx.getKsid());
+                super.saveSyncLink(Long.parseLong(hrmDepartment.getFid()), hrmDepartment.getId());
+            }
         }
         updateSupDebtId();
     }
@@ -56,7 +58,7 @@ public class DebtSyncService extends AbstractSyncService {
         HrmDepartment dept = new HrmDepartment();
         dept.setDepartmentmark(fwBmxx.getKsmc());
         dept.setDepartmentname(fwBmxx.getKsmc());
-        dept.setSubcompanyid1(1L);
+        dept.setSubcompanyid1(21L);
         if(null != fwBmxx.getSjid()) {
             if("*".equals(fwBmxx.getSjid())) {
                 dept.setSupdepid(0L);

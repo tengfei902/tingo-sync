@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class SyncServiceFactory {
 
-    Map<SyncType,ISyncService> syncServiceMap = new ConcurrentHashMap<>();
+    Map<SyncType,ISyncService> syncServiceMap = new ConcurrentHashMap<SyncType,ISyncService>();
     @Autowired
     private DebtSyncService debtSyncService;
     @Autowired

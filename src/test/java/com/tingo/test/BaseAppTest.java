@@ -12,4 +12,5 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:/META-INF/spring/app-bootstrap.xml"})
 public class BaseAppTest {
+
 }

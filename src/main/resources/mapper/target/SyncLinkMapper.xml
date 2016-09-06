@@ -147,16 +147,16 @@
     where sync_type = #{syncType,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectSyncLinks" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  <select id="lazeyLoadSyncLink" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select
     <include refid="Base_Column_List" />
     from SYNCLINK
     where sync_type = #{syncType,jdbcType=VARCHAR}
     <if test="originId != null" >
-      and ORIGIN_ID = #{originId,jdbcType=DECIMAL},
+      and ORIGIN_ID = #{originId,jdbcType=DECIMAL}
     </if>
     <if test="targetId != null" >
-      and TARGET_ID = #{targetId,jdbcType=DECIMAL},
+      and TARGET_ID = #{targetId,jdbcType=DECIMAL}
     </if>
   </select>
 

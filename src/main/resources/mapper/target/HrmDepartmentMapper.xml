@@ -20,8 +20,6 @@
     <result column="ZZJGBMFGLD" jdbcType="VARCHAR" property="zzjgbmfgld" />
     <result column="JZGLBMFZR" jdbcType="VARCHAR" property="jzglbmfzr" />
     <result column="JZGLBMFGLD" jdbcType="VARCHAR" property="jzglbmfgld" />
-    <result column="BMFZR" jdbcType="VARCHAR" property="bmfzr" />
-    <result column="BMFGLD" jdbcType="VARCHAR" property="bmfgld" />
     <result column="FID" jdbcType="VARCHAR" property="fid" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -31,7 +29,7 @@
     -->
     ID, DEPARTMENTMARK, DEPARTMENTNAME, SUBCOMPANYID1, SUPDEPID, ALLSUPDEPID, SHOWORDER, 
     CANCELED, DEPARTMENTCODE, COADJUTANT, ZZJGBMFZR, ZZJGBMFGLD, JZGLBMFZR, JZGLBMFGLD, 
-    BMFZR, BMFGLD,FID
+     FID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
     <!--
@@ -56,14 +54,12 @@
       SUBCOMPANYID1, SUPDEPID, ALLSUPDEPID, 
       SHOWORDER, CANCELED, DEPARTMENTCODE, 
       COADJUTANT, ZZJGBMFZR, ZZJGBMFGLD, 
-      JZGLBMFZR, JZGLBMFGLD, BMFZR, 
-      BMFGLD,FID)
+      JZGLBMFZR, JZGLBMFGLD,FID)
     values (#{departmentmark,jdbcType=VARCHAR}, #{departmentname,jdbcType=VARCHAR},
       #{subcompanyid1,jdbcType=DECIMAL}, #{supdepid,jdbcType=DECIMAL}, #{allsupdepid,jdbcType=VARCHAR}, 
       #{showorder,jdbcType=DECIMAL}, #{canceled,jdbcType=CHAR}, #{departmentcode,jdbcType=VARCHAR}, 
       #{coadjutant,jdbcType=DECIMAL}, #{zzjgbmfzr,jdbcType=VARCHAR}, #{zzjgbmfgld,jdbcType=VARCHAR}, 
-      #{jzglbmfzr,jdbcType=VARCHAR}, #{jzglbmfgld,jdbcType=VARCHAR}, #{bmfzr,jdbcType=VARCHAR}, 
-      #{bmfgld,jdbcType=VARCHAR},#{fid,jdbcType=VARCHAR})
+      #{jzglbmfzr,jdbcType=VARCHAR}, #{jzglbmfgld,jdbcType=VARCHAR}, #{fid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tingo.dto.target.HrmDepartment">
     <!--
@@ -114,12 +110,6 @@
       <if test="jzglbmfgld != null">
         JZGLBMFGLD,
       </if>
-      <if test="bmfzr != null">
-        BMFZR,
-      </if>
-      <if test="bmfgld != null">
-        BMFGLD,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -163,12 +153,6 @@
       </if>
       <if test="jzglbmfgld != null">
         #{jzglbmfgld,jdbcType=VARCHAR},
-      </if>
-      <if test="bmfzr != null">
-        #{bmfzr,jdbcType=VARCHAR},
-      </if>
-      <if test="bmfgld != null">
-        #{bmfgld,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -214,12 +198,6 @@
       <if test="jzglbmfgld != null">
         JZGLBMFGLD = #{jzglbmfgld,jdbcType=VARCHAR},
       </if>
-      <if test="bmfzr != null">
-        BMFZR = #{bmfzr,jdbcType=VARCHAR},
-      </if>
-      <if test="bmfgld != null">
-        BMFGLD = #{bmfgld,jdbcType=VARCHAR},
-      </if>
     </set>
     where ID = #{id,jdbcType=DECIMAL}
   </update>
@@ -237,9 +215,7 @@
       ZZJGBMFZR = #{zzjgbmfzr,jdbcType=VARCHAR},
       ZZJGBMFGLD = #{zzjgbmfgld,jdbcType=VARCHAR},
       JZGLBMFZR = #{jzglbmfzr,jdbcType=VARCHAR},
-      JZGLBMFGLD = #{jzglbmfgld,jdbcType=VARCHAR},
-      BMFZR = #{bmfzr,jdbcType=VARCHAR},
-      BMFGLD = #{bmfgld,jdbcType=VARCHAR}
+      JZGLBMFGLD = #{jzglbmfgld,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=DECIMAL}
   </update>
 

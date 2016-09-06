@@ -25,4 +25,6 @@ public interface FwOaNrDao {
     List<String> selectIds();
 
     List<FwOaNr> selectByIds(@Param("ids") List<String> ids);
+
+    byte[] selectNr(String id);
 }

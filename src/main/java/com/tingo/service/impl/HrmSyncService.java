@@ -73,7 +73,7 @@ public class HrmSyncService extends AbstractSyncService {
         //hrmResource.setSeclevel();
         hrmResource.setSubcompanyid1(new BigDecimal(1));
         if(!StringUtils.isEmpty(fwRyxx.getSzks())) {
-            String deptId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm,fwRyxx.getSzks());
+            String deptId = LocalCache.getInstance().getTargetByOrigin(SyncType.dept,fwRyxx.getSzks());
             if(!StringUtils.isEmpty(deptId)) {
                 hrmResource.setDepartmentid(new BigDecimal(deptId));
             }

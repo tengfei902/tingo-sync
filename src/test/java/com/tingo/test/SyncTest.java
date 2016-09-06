@@ -9,7 +9,6 @@ import com.tingo.utils.LocalCache;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 
 import java.util.List;
 
@@ -69,5 +68,10 @@ public class SyncTest extends BaseAppTest {
     @Test
     public void testSyncDoc() {
         syncService.syncTableData(SyncType.nr);
+    }
+
+    @Test
+    public void testSyncFj(){
+        syncService.syncTableData(SyncType.fj);
     }
 }

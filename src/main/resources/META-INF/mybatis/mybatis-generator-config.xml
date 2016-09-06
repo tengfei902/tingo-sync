@@ -36,22 +36,15 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
+
 		<!-- 正式生成之前需要删除 此事例 -->
-		<table tableName="FW_OA_NR" domainObjectName="FwOaNr"
-			   enableCountByExample="false" enableUpdateByExample="false"
-			   enableDeleteByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false">
-		</table>
-		<table tableName="FW_OA_LM" domainObjectName="FwOaLm"
-			   enableCountByExample="false" enableUpdateByExample="false"
-			   enableDeleteByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false">
-		</table>
-		<table tableName="FW_XT_FJ" domainObjectName="FwXtFj"
-			   enableCountByExample="false" enableUpdateByExample="false"
-			   enableDeleteByExample="false" enableSelectByExample="false"
-			   selectByExampleQueryId="false">
-		</table>
+		<!--
+        <table tableName="FW_RYXX" domainObjectName="FwRyxx"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        -->
 		<!-- 正式生成之前需要删除 此事例 -->
 
 	</context>

@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LocalCache {
 
-    private static Map<String,String> cacheMap = new ConcurrentHashMap<>();
+    private static Map<String,String> cacheMap = new ConcurrentHashMap<String,String>();
 
     private static LocalCache localCache;
 
@@ -49,7 +49,7 @@ public class LocalCache {
     }
 
     private void lazyLoad(SyncType syncType,String id,LocalCache.Type type) {
-        Map<String,Object> params = new HashMap<>();
+        Map<String,Object> params = new HashMap<String,Object>();
         params.put("syncType",syncType);
         if(Type.origin == type) {
             params.put("originId",id);

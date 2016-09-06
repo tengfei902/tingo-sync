@@ -2,12 +2,9 @@ package com.tingo.service.impl;
 
 import com.google.common.collect.Lists;
 import com.tingo.dao.origin.FwOaNrDao;
-import com.tingo.dao.target.DocDetailContentDao;
-import com.tingo.dao.target.DocDetailDao;
+import com.tingo.dao.target.*;
 import com.tingo.dto.origin.FwOaNr;
-import com.tingo.dto.target.DocDetail;
-import com.tingo.dto.target.DocDetailContent;
-import com.tingo.dto.target.SyncLink;
+import com.tingo.dto.target.*;
 import com.tingo.enums.SyncType;
 import com.tingo.service.AbstractSyncService;
 import com.tingo.utils.LocalCache;
@@ -18,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.sql.rowset.serial.SerialClob;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,6 +34,15 @@ public class NrSyncService extends AbstractSyncService {
 
     @Autowired
     private DocDetailContentDao docDetailContentDao;
+
+    @Autowired
+    private DocSecCategoryDao docSecCategoryDao;
+
+    @Autowired
+    private DocSubCategoryDao docSubCategoryDao;
+
+    @Autowired
+    private HrmResourceDao hrmResourceDao;
 
     @Override
     public SyncType getSyncType() {
@@ -72,9 +79,19 @@ public class NrSyncService extends AbstractSyncService {
     private DocDetail bulidDocDetail(FwOaNr fwOaNr){
         DocDetail doc = new DocDetail();
         doc.setYydocid(fwOaNr.getNrid());
-        String secCategory = LocalCache.getInstance().getTargetByOrigin(SyncType.category,fwOaNr.getLmid());
-        if(!StringUtils.isEmpty(secCategory)) {
-            doc.setSeccategory(new BigDecimal(secCategory));
+        try {
+            String secCategory = LocalCache.getInstance().getTargetByOrigin(SyncType.category, fwOaNr.getLmid());
+            if (!StringUtils.isEmpty(secCategory)) {
+                doc.setSeccategory(new BigDecimal(secCategory));
+                DocSecCategory sec = docSecCategoryDao.selectByPrimaryKey(new BigDecimal(secCategory));
+                doc.setSubcategory(sec.getSubcategoryid());
+                DocSubCategory sub = docSubCategoryDao.selectByPrimaryKey(sec.getSubcategoryid());
+                doc.setMaincategory(sub.getMaincategoryid());
+            }
+        }catch (Exception e){
+            doc.setMaincategory(new BigDecimal(0));
+            doc.setSubcategory(new BigDecimal(0));
+            doc.setSeccategory(new BigDecimal(0));
         }
         //todo 添加set代码
         doc.setDocsubject(fwOaNr.getNrbt());
@@ -88,21 +105,38 @@ public class NrSyncService extends AbstractSyncService {
         doc.setCrmid(new BigDecimal(0));
         doc.setProjectid(new BigDecimal(0));
         doc.setFinanceid(new BigDecimal(0));
-        String userId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm,fwOaNr.getSrry());
-        if(!StringUtils.isEmpty(userId)) {
-            doc.setDoccreaterid(new BigDecimal(userId)); //创建者id
-            doc.setDoclastmoduserid(new BigDecimal(userId)); //最后修改者id
-            doc.setOwnerid(new BigDecimal(userId));
+        try {
+            String userId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm, fwOaNr.getSrry());
+            if (!StringUtils.isEmpty(userId)) {
+                doc.setDoccreaterid(new BigDecimal(userId)); //创建者id
+                doc.setDoclastmoduserid(new BigDecimal(userId)); //最后修改者id
+                doc.setOwnerid(new BigDecimal(userId));
+                //获取所在部门
+                HrmResource hrmResource = hrmResourceDao.selectByPrimaryKey(new BigDecimal(userId));
+                doc.setDocdepartmentid(hrmResource.getDepartmentid()); //创建者所在部门
+            }
+        }catch (Exception e){
+            doc.setDoccreaterid(new BigDecimal(1)); //创建者id
+            doc.setDoclastmoduserid(new BigDecimal(1)); //最后修改者id
+            doc.setOwnerid(new BigDecimal(1));
+            //获取所在部门
+            doc.setDocdepartmentid(new BigDecimal(0)); //创建者所在部门
         }
-        doc.setDocdepartmentid(new BigDecimal(1)); //创建者所在部门
-        doc.setDoccreatedate(DateFormatUtils.format(fwOaNr.getSrsj(),DateFormatUtils.ISO_DATE_FORMAT.getPattern()));
-        doc.setDoccreatetime(DateFormatUtils.format(fwOaNr.getSrsj(),DateFormatUtils.ISO_TIME_FORMAT.getPattern()));
-        doc.setDoclastmoddate(DateFormatUtils.format(fwOaNr.getSrsj(),DateFormatUtils.ISO_DATE_FORMAT.getPattern()));
-        doc.setDoclastmodtime(DateFormatUtils.format(fwOaNr.getSrsj(),DateFormatUtils.ISO_TIME_FORMAT.getPattern()));
-        String shId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm,fwOaNr.getShry());
-        if(!StringUtils.isEmpty(shId)){
-            doc.setDocapproveuserid(new BigDecimal(shId));
-        }else{
+
+        if(fwOaNr.getSrsj() != null) {
+            doc.setDoccreatedate(DateFormatUtils.format(fwOaNr.getSrsj(), DateFormatUtils.ISO_DATE_FORMAT.getPattern()));
+            doc.setDoccreatetime(DateFormatUtils.format(fwOaNr.getSrsj(), DateFormatUtils.ISO_TIME_NO_T_FORMAT.getPattern()));
+            doc.setDoclastmoddate(DateFormatUtils.format(fwOaNr.getSrsj(), DateFormatUtils.ISO_DATE_FORMAT.getPattern()));
+            doc.setDoclastmodtime(DateFormatUtils.format(fwOaNr.getSrsj(), DateFormatUtils.ISO_TIME_NO_T_FORMAT.getPattern()));
+        }
+        try {
+            String shId = LocalCache.getInstance().getTargetByOrigin(SyncType.hrm, fwOaNr.getShry());
+            if (!StringUtils.isEmpty(shId)) {
+                doc.setDocapproveuserid(new BigDecimal(shId));
+            } else {
+                doc.setDocapproveuserid(new BigDecimal(0));
+            }
+        }catch (Exception e){
             doc.setDocapproveuserid(new BigDecimal(0));
         }
         doc.setDocarchiveuserid(new BigDecimal(0));
@@ -116,14 +150,29 @@ public class NrSyncService extends AbstractSyncService {
         doc.setCountmark(new BigDecimal(0));
         doc.setSummark(new BigDecimal(0));
         doc.setDocextendname("html");
-        doc.setInvalidationdate(fwOaNr.getGqrq().toString());
-        doc.setIstop(new BigDecimal(0)); //置顶
+        doc.setHasprintednum(new BigDecimal(0));
+        if(fwOaNr.getGqrq() != null) {
+            doc.setInvalidationdate(DateFormatUtils.format(fwOaNr.getGqrq(), DateFormatUtils.ISO_DATE_FORMAT.getPattern()));
+        }
+        doc.setIstop(new BigDecimal(fwOaNr.getZdjcs())); //置顶
+
+        doc.setId(getDetailId());
         return doc;
+    }
+
+    private BigDecimal getDetailId(){
+        BigDecimal id = docDetailDao.getDetailId();
+        docDetailDao.updateDetailId(id);
+        return id;
     }
 
     private DocDetailContent buildDocDetailContent(FwOaNr fwOaNr, BigDecimal docId) throws UnsupportedEncodingException {
         DocDetailContent docDetailContent = new DocDetailContent();
-        docDetailContent.setDoccontent(new String(fwOaNr.getNr(),"UTF-8"));
+        byte[] nr = originNrDao.selectNr(fwOaNr.getNrid());
+        try {
+            String tmpNr = new String(nr,"GBK");
+            docDetailContent.setDoccontent(tmpNr);
+        }catch (Exception e){}
         docDetailContent.setDocid(docId);
         return docDetailContent;
     }

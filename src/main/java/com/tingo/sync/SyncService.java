@@ -32,11 +32,11 @@ public class SyncService {
 
     public void syncTableData(SyncType syncType) {
         List<String> syncIds = dataSync.getSyncIds(syncType);
-        List<String> newIds = new ArrayList<>();
-        List<String> existedIds = new ArrayList<>();
+        List<String> newIds = new ArrayList<String>();
+        List<String> existedIds = new ArrayList<String>();
 
         List<SyncLink> links = dataSync.getSyncLinks(syncType);
-        Map<String,SyncLink> linkMap = new HashMap<>();
+        Map<String,SyncLink> linkMap = new HashMap<String,SyncLink>();
 
         for(SyncLink link:links) {
             linkMap.put(link.getOriginId().toString(),link);

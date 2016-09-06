@@ -55,4 +55,8 @@ public interface DocDetailDao {
     int updateByPrimaryKey(DocDetail record);
 
     DocDetail selectByYYId(@Param("yydocid") String yydocid);
+
+    BigDecimal getDetailId();
+
+    Integer updateDetailId(@Param("id") BigDecimal id);
 }

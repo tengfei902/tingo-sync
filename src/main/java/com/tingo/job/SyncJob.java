@@ -13,7 +13,7 @@ public class SyncJob implements ISyncJob {
     @Autowired
     private SyncService syncService;
 
-    @Scheduled(cron="0/5 * *  * * ? ")
+    @Scheduled(cron="0 0/5 * * * ?")
     public void doSync() {
         syncService.doSync();
     }
