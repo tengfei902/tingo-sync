@@ -1,7 +1,0 @@
-/Users/user/workspace/invt
-
-mybatis-generator:generate -e
-
-useGeneratedKeys="true" keyProperty="id"
-
-update hrmdepartment t set t.supdepid=(select id from hrmdepartment t2 where t2.fid=t.supdepid) where t.fid is not null and exists (select 1 from hrmdepartment t3 where t3.fid = t.supdepid);
